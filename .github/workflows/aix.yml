@@ -8,10 +8,10 @@ jobs:
     - name: Checkout code
       uses: actions/checkout@v4
     - name: Trigger Jenkins Job via API
-      shell: bash # Ensures the same syntax works on Windows
+      shell: bash
       run: |
         curl -X POST -u "${{ secrets.JENKINS_USER }}:${{ secrets.JENKINS_TOKEN }}" \
-        "${{ secrets.JENKINS_URL }}/job/onnxruntime-aix-local/build"
-        parameters: |
-          ENVIRONMENT=staging
-          VERSION=${{ github.sha }}
+        --data "ENVIRONMENT=staging" \
+        --data "VERSION=${{ github.sha }}" \
+        "${{ secrets.JENKINS_URL }}/job/onnxruntime-aix-local/buildWithParameters"
+
