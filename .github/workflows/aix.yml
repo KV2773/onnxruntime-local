@@ -11,5 +11,5 @@ jobs:
       shell: bash
       run: |
         curl -X POST -u "${{ secrets.JENKINS_USER }}:${{ secrets.JENKINS_TOKEN }}" \
-        "${{ secrets.JENKINS_URL }}/job/onnxruntime-aix-local/buildWithParameters"
+        "${{ secrets.JENKINS_URL }}/job/onnxruntime-aix-local/"
 
