@@ -1,4 +1,4 @@
-name: AIX_Openxl_CI
+name: ios_CI
 
 on:
   push:
