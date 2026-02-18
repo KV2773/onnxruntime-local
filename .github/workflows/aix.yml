@@ -11,7 +11,5 @@ jobs:
       shell: bash
       run: |
         curl -X POST -u "${{ secrets.JENKINS_USER }}:${{ secrets.JENKINS_TOKEN }}" \
-        --data "ENVIRONMENT=staging" \
-        --data "VERSION=${{ github.sha }}" \
         "${{ secrets.JENKINS_URL }}/job/onnxruntime-aix-local/buildWithParameters"
 
