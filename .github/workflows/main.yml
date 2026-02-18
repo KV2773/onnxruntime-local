@@ -1,0 +1,21 @@
+name: Trigger Jenkins Build
+on: [push] # Triggers the workflow on push events
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+    - name: Trigger Jenkins Job and Wait
+      uses: appleboy/jenkins-action@v1
+      with:
+        url: ${{ secrets.JENKINS_URL }}
+        user: ${{ secrets.JENKINS_USER }}
+        token: ${{ secrets.JENKINS_TOKEN }}
+        job: 'onnxruntime-aix-local'
+        wait: true # Optional: wait for job completion and return status
+        # Optional: pass parameters to the Jenkins job
+        parameters: |
+          ENVIRONMENT=staging
+          VERSION=${{ github.sha }}
