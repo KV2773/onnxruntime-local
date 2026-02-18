@@ -115,6 +115,7 @@ namespace Dml
                 {
                     auto inputProto = onnxruntime::utils::TensorToTensorProto(input, inputName);
 
+                    std::cout<<"Here the parameter is changing the file dmlruntimefusedgraphkernel.cpp118: "<<inputProto.name()<<std::endl;
                     // We can only avoid recompiling the graph when all CPU inputs are identical
                     auto initializerIter = m_isInitializerTransferable.find(inputName);
 

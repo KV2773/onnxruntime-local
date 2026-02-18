@@ -99,6 +99,9 @@ static common::Status DeserializeTensorProto(const Env& env, const std::basic_st
   const auto& memory_info = (alloc != nullptr) ? alloc->Info() : memory_buffer->GetAllocInfo();
   const auto device = memory_info.device;
 
+  std::cout<<"The deserialitzation is happening here: "<<tensor_proto.name()<<std::endl;
+
+
   if (utils::HasExternalData(tensor_proto)) {
     auto external_data_loader = external_data_loader_mgr.GetExternalDataLoader(memory_info);
     if (external_data_loader) {
@@ -106,7 +109,7 @@ static common::Status DeserializeTensorProto(const Env& env, const std::basic_st
       ORT_RETURN_IF_ERROR(AllocateTensor(memory_buffer, tensor, type, tensor_shape, use_device_allocator_for_initializers, alloc));
       ORT_RETURN_IF_ERROR(utils::LoadExtDataToTensorFromTensorProto(env, proto_path, tensor_proto,
                                                                     *external_data_loader, tensor));
-
+      
       Tensor::InitOrtValue(std::move(tensor), ort_value);
       return common::Status::OK();
     } else if (device == default_cpu_device) {
@@ -227,6 +230,16 @@ common::Status CopyTensorFromCPUToDevice(
     }
     return copy_status;
   } else {
+std::cout << "The CopyTensorFromCPUToDevice233:" << std::endl;
+// 1. Fixed std::min by making both types the same (size_t)
+// 2. Cast DataRaw() to const uint8_t* so it can be indexed
+for(size_t i = 0; i < std::min(tensor.SizeInBytes(), static_cast<size_t>(10)); i++) 
+{
+    std::cout <<std::hex<< static_cast<int>(static_cast<const uint8_t*>(tensor.DataRaw())[i]) << " ";
+}
+// 3. Fixed missing std:: prefix for endl
+std::cout << std::endl;
+
     Tensor::InitOrtValue(std::move(tensor), ort_value);
     return common::Status::OK();
   }
@@ -248,6 +261,8 @@ common::Status SaveInitializedTensors(
     PrepackedWeightsForGraph& prepacked_for_graph) {
   LOGS(logger, INFO) << "Saving initialized tensors.";
   ORT_ENFORCE(ort_value_name_idx_map.MaxIdx() > -1, "OrtValue indexes should have been populated.");
+
+  std::cout<<"The mode is saved here also session_state_utils.cc 252"<<std::endl;
 
   // Determine if an intializer was supplied by the user for the purpose of sharing and if it requires a cross-device
   // copy. In case a cross-device copy is required, sharing cannot be accomplished since we allocate our own buffer
@@ -380,17 +395,34 @@ common::Status SaveInitializedTensors(
     if (user_supplied_initializer_ids.find(entry.first) != user_supplied_initializer_ids.end()) {
       ort_value = *(session_options.initializers_to_share_map.at(name));
       LOGS(logger, INFO) << "Using user supplied initializer with name (" << name << ").";
+      std::cout<< "Using user supplied initializer with name (" << name << ")."<<std::endl;
+
     } else {
       const ONNX_NAMESPACE::TensorProto& tensor_proto = *(entry.second);
 
+      std::cout<<"The else loop is gng on i ss_utils.cc393:  "<<tensor_proto.name()<<std::endl;
       std::optional<MemBuffer> memory_buffer;
       AllocatorPtr alloc;
       // TODO: if the tensor need be copied, does it have enough room?
       ORT_RETURN_IF_ERROR(planner.GetPreallocatedBuffer(ort_value_index, name, memory_buffer, alloc));
 
       // Check if we already have an OrtValue for this initializer on CPU
+
+      
+
       if (OrtValue ort_value_from_graph;
           graph.GetOrtValueInitializer(name, ort_value_from_graph)) {
+
+//             std::cout<<"The tensor is passed here 416 ortvalue: "<<name<<std::endl;
+            
+//             for(size_t i = 0; i < std::m  in(ort_value_from_graph.Get<Tensor>().SizeInBytes(), static_cast<size_t>(10)); i++) 
+// {
+//     std::cout <<std::hex<< static_cast<int>(static_cast<const uint8_t*>(ort_value_from_graph.Get<Tensor>().DataRaw())[i]) << " ";
+// }
+// 3. Fixed missing std:: prefix for endl
+// std::cout << std::endl;
+
+
         const auto& memory_info = (alloc != nullptr) ? alloc->Info() : memory_buffer->GetAllocInfo();
         if (memory_info.device == default_cpu_device) {
           // This is on CPU use directly from the graph

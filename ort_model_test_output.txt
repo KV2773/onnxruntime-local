@@ -1,0 +1,1 @@
+./script.sh: line 34: ./onnxruntime_test_all: A file or directory in the path name does not exist.

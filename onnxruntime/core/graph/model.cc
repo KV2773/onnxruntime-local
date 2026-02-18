@@ -9,6 +9,7 @@
 #include "core/graph/model.h"
 #include "core/graph/model_editor_api_types.h"
 #include "core/graph/model_load_utils.h"
+#include <google/protobuf/text_format.h>
 
 #ifdef _MSC_VER
 #pragma warning(push)
@@ -184,6 +185,7 @@ Model::Model(ModelProto&& model_proto, const PathString& model_path,
 
   model_proto_ = std::move(model_proto);
   for (auto& prop : model_proto_.metadata_props()) {
+    std::cout<< "Model metadata - Key: " << prop.key() << ", Value: " << prop.value() << std::endl;
     model_metadata_[prop.key()] = prop.value();
   }
 
@@ -194,6 +196,7 @@ Model::Model(ModelProto&& model_proto, const PathString& model_path,
     }
   }
 
+  std::cout<< "Model opset imports:" << std::endl;
   // IsAllowReleasedONNXOpsetsOnlySet() checks for the appropriate env var in the process (i.e.) process-wide
   // `allow_released_opsets_only` is for this specific Model instance
   // We will only support released opsets iff IsAllowReleasedONNXOpsetsOnlySet() and `allow_released_opsets_only`
@@ -404,6 +407,7 @@ ModelProto Model::ToGraphProtoWithExternalInitializers(const std::filesystem::pa
   result.clear_metadata_props();
   for (const auto& metadata : model_metadata_) {
     const gsl::not_null<StringStringEntryProto*> prop{result.add_metadata_props()};
+    // std::cout<<metadata.first<<std::endl;
     prop->set_key(metadata.first);
     prop->set_value(metadata.second);
   }
@@ -441,6 +445,7 @@ Status Model::Load(std::istream& model_istream, ModelProto* p_model_proto) {
   if (!p_model_proto) {
     return Status(ONNXRUNTIME, INVALID_ARGUMENT, "Null model_proto ptr.");
   }
+
 
   google::protobuf::io::IstreamInputStream zero_copy_input(&model_istream);
   const bool result = p_model_proto->ParseFromZeroCopyStream(&zero_copy_input) && model_istream.eof();
@@ -517,6 +522,7 @@ Status Model::Load(ModelProto&& model_proto,
   // need to call private ctor so can't use make_shared
   GSL_SUPPRESS(r .11)
   auto status = Status::OK();
+  std::cout<<"Model::Load called with model path: " << ToUTF8String(model_path) <<std::endl;
   ORT_TRY {
     model = std::make_unique<Model>(std::move(model_proto), model_path, local_registries, logger, options);
   }
@@ -542,6 +548,7 @@ Status Model::Load(ModelProto&& model_proto,
 template <typename T, typename Loader>
 static Status LoadModelHelper(const T& file_path, Loader loader) {
   int fd;
+  std::cout<<"model.cc 551"<<std::endl;
   Status status = Env::Default().FileOpenRd(file_path, fd);
   if (!status.IsOK()) {
     if (status.Category() == common::SYSTEM) {
@@ -592,6 +599,8 @@ template <typename T>
 static Status LoadModel(const T& file_path, std::shared_ptr<Model>& p_model,
                         const IOnnxRuntimeOpSchemaRegistryList* local_registries,
                         const logging::Logger& logger, const ModelOptions& options) {
+
+                          std::cout<<"model.cc 602: "<<file_path<<std::endl;
   const auto loader = [&file_path, &p_model, local_registries, &logger, &options](int fd) {
     return Model::Load(fd, ToPathString(file_path), p_model, local_registries, logger, options);
   };
@@ -693,6 +702,8 @@ GSL_SUPPRESS(r .35)
 Status Model::Load(const PathString& file_path, std::shared_ptr<Model>& p_model,
                    const IOnnxRuntimeOpSchemaRegistryList* local_registries,
                    const logging::Logger& logger, const ModelOptions& options) {
+
+                    std::cout<<"Model::Load model.cc 703: "<<file_path<<std::endl;
   return LoadModel(file_path, p_model, local_registries, logger, options);
 }
 
@@ -753,7 +764,57 @@ Status Model::Load(int fd, ONNX_NAMESPACE::ModelProto& model_proto) {
     block_size = std::min(DEFAULT_PROTOBUF_BLOCK_SIZE, static_cast<int>(file_size));
   }
   FileInputStream input(fd, block_size);
+  std::cout<<"Model::Load called with fd: " << fd << " and block size: " << block_size << std::endl;
   const bool result = model_proto.ParseFromZeroCopyStream(&input) && input.GetErrno() == 0;
+
+
+//   std::string text;
+// google::protobuf::TextFormat::PrintToString(model_proto, &text);
+// std::cout << text << std::endl;
+std::cout << "==== MODEL INFO ====" << std::endl;
+std::cout << "IR Version: " << model_proto.ir_version() << std::endl;
+std::cout << "Producer: " << model_proto.producer_name() << std::endl;
+std::cout << "Domain: " << model_proto.domain() << std::endl;
+
+const auto& graph = model_proto.graph();
+
+std::cout << "\n==== GRAPH INFO ====" << std::endl;
+std::cout << "Graph Name: " << graph.name() << std::endl;
+std::cout << "Nodes: " << graph.node_size() << std::endl;
+std::cout << "Initializers: " << graph.initializer_size() << std::endl;
+std::cout << "Inputs: " << graph.input_size() << std::endl;
+std::cout << "Outputs: " << graph.output_size() << std::endl;
+
+for (int i = 0; i < graph.initializer_size(); ++i) {
+  const auto& tensor = graph.initializer(i);
+
+  std::cout << "\nInitializer: " << tensor.name() << std::endl;
+  std::cout << "  DataType: " << tensor.data_type() << std::endl;
+  std::cout << "  Dims: ";
+
+  for (int j = 0; j < tensor.dims_size(); ++j)
+    {std::cout << tensor.dims(j) << " ";}
+
+  std::cout << std::endl;
+
+
+
+
+  // Example for float weights
+  // if (tensor.has_raw_data()) {
+    if (tensor.data_type() == ONNX_NAMESPACE::TensorProto::FLOAT) {
+  std::cout << "Float data size: " << tensor.float_data_size() << std::endl;
+
+  for (int i = 0; i < std::min(16,tensor.float_data_size()); ++i) {
+    std::cout << std::hex<<tensor.float_data(i) << " ";
+  }
+  std::cout << std::endl;
+}  // reset to decimal
+  // }
+}
+
+
+
   if (!result) {
     return Status(ONNXRUNTIME, INVALID_PROTOBUF, "Protobuf parsing failed.");
   }
@@ -787,6 +848,8 @@ Status Model::Load(int fd, const PathString& model_path, std::shared_ptr<Model>&
   ORT_RETURN_IF_ERROR(Load(fd, model_proto));
 
   p_model = std::make_shared<Model>(std::move(model_proto), model_path, local_registries, logger, options);
+                    
+  std::cout<<"model.cc 849:"<<model_path<<std::endl;
 
   Graph::ResolveOptions resolve_options;
   resolve_options.no_proto_sync_required = true;
@@ -880,6 +943,7 @@ Status Model::Save(Model& model, int p_fd) {
 
   auto model_proto = model.ToProto();
   google::protobuf::io::FileOutputStream output(p_fd);
+  std::cout<<"Saving model proto to fd: "<<p_fd<<std::endl;
   const bool result = model_proto.SerializeToZeroCopyStream(&output) && output.Flush();
   if (result) {
     return Status::OK();
@@ -901,6 +965,7 @@ Status Model::SaveWithExternalInitializers(Model& model,
   auto model_proto = model.ToGraphProtoWithExternalInitializers(external_file_name, file_path,
                                                                 model_saving_options);
   google::protobuf::io::FileOutputStream output(fd);
+std::cout<<"Saving model with external initializers to fd: "<<fd<<std::endl;
   const bool result = model_proto.SerializeToZeroCopyStream(&output) && output.Flush();
   if (result) {
     return Status::OK();
@@ -940,6 +1005,7 @@ common::Status Model::SaveToOrtFormat(flatbuffers::FlatBufferBuilder& builder,
     std::vector<flatbuffers::Offset<onnxruntime::fbs::StringStringEntry>> metadata_props_vec;
     metadata_props_vec.reserve(model_metadata_.size());
     for (const auto& prop : model_metadata_) {
+      std::cout<<"Saving model metadata entry: "<<prop.first<<" = "<<prop.second<<std::endl;
       metadata_props_vec.push_back(
           fbs::CreateStringStringEntryDirect(builder, prop.first.c_str(), prop.second.c_str()));
     }
@@ -949,6 +1015,7 @@ common::Status Model::SaveToOrtFormat(flatbuffers::FlatBufferBuilder& builder,
   flatbuffers::Offset<fbs::Graph> fbs_graph;
   ORT_RETURN_IF_ERROR(graph_->SaveToOrtFormat(builder, fbs_graph));
 
+  std::cout<<"Here the model is there"<<ModelPath()<<std::endl;
   fbs::ModelBuilder mb(builder);
   mb.add_ir_version(IrVersion());
   mb.add_opset_import(op_set_ids);
@@ -989,6 +1056,7 @@ common::Status Model::LoadFromOrtFormat(const fbs::Model& fbs_model,
       std::string key, value;
       fbs::utils::LoadStringFromOrtFormat(key, prop->key());
       fbs::utils::LoadStringFromOrtFormat(value, prop->value());
+      std::cout<<"Loaded model metadata entry: "<<key<<" = "<<value<<std::endl;
       model->model_metadata_.insert({key, value});
     }
   }
@@ -1010,6 +1078,20 @@ common::Status Model::LoadFromOrtFormat(const fbs::Model& fbs_model,
       schema_registry->RegisterRegistry(schema_collection);
     }
   }
+
+  std::cout << "ORT format model metadata entries:"<<std::endl;
+  for (const auto& kv : model->model_metadata_) {
+    std::cout << "  " << kv.first << " = " << kv.second<<std::endl;
+  }
+
+  std::cout << "ModelProto fields: producer_name='" << model->model_proto_.producer_name()
+                        << "' producer_version='" << model->model_proto_.producer_version()
+                        << "' domain='" << model->model_proto_.domain()
+                        << "' doc_string='" << model->model_proto_.doc_string()
+                        << "' graph_doc_string='" << model->model_proto_.graph().doc_string()
+                        << "' model_version=" << model->model_proto_.model_version()
+                        << " ir_version=" << model->model_proto_.ir_version()<<std::endl;
+
 
   // Populate the metadata to model_proto
   for (auto& metadata : model->model_metadata_) {
@@ -1051,3 +1133,4 @@ common::Status Model::LoadFromOrtFormat(const fbs::Model& fbs_model,
   return Status::OK();
 }
 }  // namespace onnxruntime
+

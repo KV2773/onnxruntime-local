@@ -108,6 +108,14 @@ ONNX_NAMESPACE::TensorProto CopyTensorToTensorProto(const Tensor& src_tensor, co
   Tensor dst_tensor{src_tensor.DataType(), src_tensor.Shape(), dst_span.data(), cpu_alloc_info};
   ORT_THROW_IF_ERROR(data_transfer_manager.CopyTensor(src_tensor, dst_tensor));
 
+  std::cout<<std::endl;
+  std::cout<<"The file data is there in utils.cc port training 111: "<<std::endl;
+  for(int i=0;i<std::min(10,src_tensor.SizeInBytes());i++)
+  {
+    std::cout<<src_tensor.DataRaw()[i]<<" ";
+  }
+
+  std::cout<<std::endl;
   // Convert Tensor to TensorProto.
   ONNX_NAMESPACE::TensorProto tensor_proto;
   return onnxruntime::utils::TensorToTensorProto(dst_tensor, tensor_proto_name);

@@ -55,6 +55,8 @@ static Status CreateSession(const SessionOptions& so, std::unique_ptr<InferenceS
         std::make_unique<InternalTestingExecutionProvider>(*supported_ops)));
   }
 
+  std::cout << "Loading model from path: " << model_path << std::endl;
+
   ORT_RETURN_IF_ERROR(session->Load(model_path));
   ORT_RETURN_IF_ERROR(session->Initialize());
   return Status::OK();
@@ -78,7 +80,7 @@ static void ExecuteMnist(InferenceSessionWrapper& session, bool custom_ep_enable
   std::vector<OrtValue> fetches;
 
   ASSERT_STATUS_OK(session.Run(feeds, output_names, &fetches));
-
+ std::cout << "Fetches size: " << fetches.size() << std::endl;
   if (custom_ep_enabled) {
     // check that the output is all zeros. the dummy EP produces output of the correct shape with all zeros, so any
     // downstream operations should still result in zeros for this model

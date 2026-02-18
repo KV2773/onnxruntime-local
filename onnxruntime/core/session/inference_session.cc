@@ -928,6 +928,10 @@ common::Status InferenceSession::SaveToOrtFormat(const std::filesystem::path& fi
   // Get the byte size of the ModelProto and round it to the next MB and use it as flatbuffers' init_size
   // TODO: Investigate whether we should set a max size, and clarify the cost of having a buffer smaller than
   // what the total flatbuffers serialized size will be.
+
+  std::cout<<"The InferenceSession::SaveToOrtFormat 932: "<<filepath<<std::endl; 
+
+  
   constexpr size_t m_bytes = 1024 * 1024;
   size_t fbs_buffer_size = std::max(m_bytes, model_->ToProto().ByteSizeLong());
   fbs_buffer_size = ((fbs_buffer_size + m_bytes - 1) / m_bytes) * m_bytes;
@@ -956,6 +960,51 @@ common::Status InferenceSession::SaveToOrtFormat(const std::filesystem::path& fi
   sb.add_kernel_type_str_resolver(fbs_kernel_type_str_resolver);
   auto session = sb.Finish();
   builder.Finish(session, fbs::InferenceSessionIdentifier());
+
+uint8_t* buf = builder.GetBufferPointer();
+// size_t size = builder.GetSize();
+
+const auto* session_root =
+    flatbuffers::GetRoot<fbs::InferenceSession>(buf);
+
+if (!session_root) return Status::OK();
+
+const auto* model = session_root->model();
+if (!model) return Status::OK();
+
+const auto* graph = model->graph();
+if (!graph) return Status::OK();
+
+const auto* initializers = graph->initializers();
+if (!initializers) return Status::OK();
+
+for (const auto* tensor : *initializers) {
+  if (!tensor) continue;
+
+  const char* name =
+      tensor->name() ? tensor->name()->c_str() : "<no name>";
+
+  std::cout << name << " "
+            << static_cast<int>(tensor->data_type())
+            << std::endl;
+
+  const auto* raw = tensor->raw_data();
+  if (raw && raw->size() > 0) {
+    size_t limit = std::min<size_t>(10, raw->size());
+
+    std::cout << std::hex << std::setfill('0');
+    for (unsigned int i = 0; i < limit; ++i) {
+      std::cout << std::setw(2)
+                << std::hex<<static_cast<int>(raw->Get(i))
+                << " ";
+    }
+    std::cout << std::dec << std::endl;
+  } else {
+    std::cout << "<no raw_data>" << std::endl;
+  }
+}
+
+std::cout<<"The filepath here is inference_session.cc 1007. "<<ToUTF8String(filepath.native())<<std::endl;
 
   {
     std::ofstream file(filepath, std::ios::binary);
@@ -1016,6 +1065,7 @@ common::Status InferenceSession::LoadWithLoader(std::function<common::Status(std
 
 common::Status InferenceSession::LoadOnnxModel(const PathString& model_uri) {
   model_location_ = model_uri;
+  std::cout<< "Loading ONNX model from: " << ToUTF8String(model_uri) << std::endl;
   auto loader = [this](std::shared_ptr<onnxruntime::Model>& model) {
 #ifdef ENABLE_LANGUAGE_INTEROP_OPS
     LoadInterOp(model_location_, interop_domains_, [&](const char* msg) { LOGS(*session_logger_, WARNING) << msg; });
@@ -1027,6 +1077,7 @@ common::Status InferenceSession::LoadOnnxModel(const PathString& model_uri) {
 
     const bool strict_shape_type_inference = session_options_.config_options.GetConfigOrDefault(
                                                  kOrtSessionOptionsConfigStrictShapeTypeInference, "0") == "1";
+                                    
     return onnxruntime::Model::Load(model_location_, model, HasLocalSchema() ? &custom_schema_registries_ : nullptr,
                                     *session_logger_,
                                     ModelOptions(true, strict_shape_type_inference,
@@ -1059,6 +1110,8 @@ common::Status InferenceSession::Load(const PathString& model_uri) {
       (!has_explicit_type && fbs::utils::IsOrtFormatModel(model_uri))) {
     return LoadOrtModel(model_uri);
   }
+
+  std::cout<<"The infernce_session.cc  InferenceSession: 1057"<<model_uri<<std::endl;
 
 #if !defined(ORT_MINIMAL_BUILD)
   if (is_model_proto_parsed_) {
@@ -1599,6 +1652,8 @@ static Status LoadOrtModelBytes(const PathString& model_uri,
   size_t num_bytes = 0;
   ORT_RETURN_IF_ERROR(Env::Default().GetFileLength(model_uri.c_str(), num_bytes));
 
+  std::cout<<"file path: " << model_uri << ", size: " << num_bytes << std::endl;
+
   bytes_data_holder.resize(num_bytes);
 
   std::ifstream bytes_stream(model_uri, std::ifstream::in | std::ifstream::binary);
@@ -1616,6 +1671,7 @@ static Status LoadOrtModelBytes(const PathString& model_uri,
 }
 
 Status InferenceSession::LoadOrtModel(const PathString& model_uri) {
+  std::cout<<"LoadOrtModel from file: " << model_uri.c_str() << std::endl;
   return LoadOrtModelWithLoader(
       [&]() {
         model_location_ = model_uri;
@@ -1722,6 +1778,21 @@ Status InferenceSession::LoadOrtModelWithLoader(std::function<Status()> load_ort
   const auto* fbs_model = fbs_session->model();
   ORT_RETURN_IF(nullptr == fbs_model, "Missing Model. Invalid ORT format model.");
 
+  std::cout<<"The model loaded output of inference.cc: 1732"<<fbs_model->model_version()<<std::endl;
+if (const auto* fbs_graph = fbs_model->graph()) {
+        if (const auto* fbs_initializers = fbs_graph->initializers()) {
+          for (const auto* fbs_tensor : *fbs_initializers) {
+            std::cout<<fbs_tensor->name()->str()<<" "<<static_cast<int>(fbs_tensor->data_type())<<std::endl;
+            int cntr=0;
+            for(const auto& itr:*fbs_tensor->raw_data()){
+                if(cntr>=10) break;
+                cntr++;
+                std::cout<<std::hex<<static_cast<int>(itr)<<"  ";
+            }
+            std::cout<<std::endl;
+          }
+        }
+    }
   // if we're using the bytes directly because kOrtSessionOptionsConfigUseORTModelBytesDirectly was set and the user
   // provided an existing buffer of bytes when creating the InferenceSession, ort_format_model_bytes_data_holder_
   // will be empty.

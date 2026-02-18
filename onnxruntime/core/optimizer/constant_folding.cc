@@ -318,6 +318,22 @@ Status ConstantFolding::ApplyImpl(Graph& graph, bool& modified, int graph_level,
           auto* constant_arg_out = node->MutableOutputDefs()[fetch_idx];
           const Tensor& out_tensor = ort_value.Get<Tensor>();
           constexpr const bool use_tensor_buffer_true = true;
+
+
+          if constexpr(endian::native!=endian::little)
+          {        
+          Tensor& mutable_tensor = const_cast<Tensor&>(out_tensor);
+
+          const DataTypeImpl* type = mutable_tensor.DataType();
+          size_t elem_size = type->Size();
+
+          utils::SwapByteOrderInplace(
+              elem_size,
+              gsl::span<std::byte>(
+                  reinterpret_cast<std::byte*>(mutable_tensor.MutableDataRaw()),
+                  mutable_tensor.SizeInBytes()));
+          }
+          
           ONNX_NAMESPACE::TensorProto out_tensorproto = utils::TensorToTensorProto(
               out_tensor,
               constant_arg_out->Name(),

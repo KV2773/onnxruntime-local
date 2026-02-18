@@ -136,6 +136,8 @@ static void FuseInitializerWithNode(Graph& graph,
   // Remove the edge between the current node output def at index 0 and next node arg at relative arg index.
   graph.RemoveEdge(node.Index(), next_node.Index(), 0, static_cast<int>(next_node_arg_index));
 
+  std::cout<<"The new initialiser are forming here see here also140 fuse_intializers_transformer.cc : "<<std::endl;
+
   // Add the new converted Tensor in next node as initializer potentially with external data
   ONNX_NAMESPACE::TensorProto dst_tensor = utils::TensorToTensorProto(new_data.Get<Tensor>(), new_arg_name, true);
   if (!utils::HasExternalData(dst_tensor)) {

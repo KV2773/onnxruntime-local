@@ -11,7 +11,6 @@
 #include "core/framework/tensorprotoutils.h"
 #include "core/framework/tensor_external_data_info.h"
 #include "core/graph/graph.h"
-
 using namespace ONNX_NAMESPACE;
 
 namespace onnxruntime::fbs::utils {
@@ -25,7 +24,6 @@ SaveDims(flatbuffers::FlatBufferBuilder& builder, const DimsFieldType& dims) {
 }
 
 #if !defined(ORT_MINIMAL_BUILD)
-
 Status SaveInitializerOrtFormat(flatbuffers::FlatBufferBuilder& builder,
                                 const TensorProto& initializer,
                                 const std::filesystem::path& model_path,
@@ -35,6 +33,7 @@ Status SaveInitializerOrtFormat(flatbuffers::FlatBufferBuilder& builder,
   auto doc_string = SaveStringToOrtFormat(builder, initializer.has_doc_string(), initializer.doc_string());
   auto dims = SaveDims(builder, initializer.dims());
 
+  std::cout<< "The model path is this accn to gh_fbs_utils: 38: "<<model_path<<std::endl;
   // we have to populate string_data or raw_data prior to creating the TensorBuilder instance to avoid vtable offset
   // issues.
   flatbuffers::Offset<flatbuffers::Vector<flatbuffers::Offset<flatbuffers::String>>> string_data;
@@ -53,13 +52,120 @@ Status SaveInitializerOrtFormat(flatbuffers::FlatBufferBuilder& builder,
     // We can not convert this in place, because the session may be used
     // after the model was saved in ort format. If the session is continued to be used, then
     // we continue with initializers in memory with wrong endianess
+
+    // for(auto &tp: initializer)
+    // {
+      std::cout<<"The gp_fbs init name:"<<initializer.name()<<std::endl;
+      bool has_external_data = initializer.external_data_size() > 0;
+  //   if(initializer.has_raw_data() )
+  //   {
+  //       std::cout << "Has any data: " << "has_raw_data" << std::endl;
+  //   }
+  //   else if(initializer.float_data_size() >0)
+  //   {
+  //       std::cout << "Has any data: " << "float_data_size" << std::endl;
+
+  //   }
+  //   else if(initializer.double_data_size() > 0 )
+  //   {
+  //       std::cout << "Has any data: " << "double_data_size" << std::endl;
+  //   }
+  //   else if( initializer.int32_data_size() > 0 )
+  //   {
+  //       std::cout << "Has any data: " << "int32_data_size" << std::endl;
+
+  //   }
+  //  else if(initializer.int64_data_size() > 0 )
+  //  {
+  //       std::cout << "Has any data: " << "int64_data_size" << std::endl;
+
+  //  }
+  //  else if(initializer.uint64_data_size() > 0)
+  //  {
+  //       std::cout << "Has any data: " << "uint64_data_size" << std::endl;
+
+  //  }
+  //   else if(initializer.string_data_size() > 0)
+  //   {
+  //       std::cout << "Has any data: " << "string_data_size" << std::endl;
+
+  //   }
+  //  else if(){
+  //       std::cout << "Has any data: " << "external_data_size" << std::endl;
+
+  //  }
+    
+
+
+
+    //    for(int i = 0; i < std::min(16, initializer.float_data_size()); i++) {
+    //   std::cout << initializer.float_data(i) <<" ";
+    // }
+    //   std::cout<<std::endl;
+    // // }
+
+  // std::cout<<initializer.raw_data()<<std::endl;
+  if(has_external_data)
+{ORT_RETURN_IF_ERROR(onnxruntime::utils::UnpackInitializerData(initializer, model_path, unpacked_tensor));}
+else{
     if constexpr (endian::native != endian::little) {
       auto be_copy{initializer};
       onnxruntime::utils::ConvertRawDataInTensorProto(be_copy);
-      ORT_RETURN_IF_ERROR(onnxruntime::utils::UnpackInitializerData(be_copy, model_path, unpacked_tensor));
-    } else {
+      ORT_RETURN_IF_ERROR(onnxruntime::utils::UnpackInitializerData(be_copy, model_path, unpacked_tensor));}
+     else {
       ORT_RETURN_IF_ERROR(onnxruntime::utils::UnpackInitializerData(initializer, model_path, unpacked_tensor));
     }
+  }
+    std::cout << "Initializer: " << initializer.name() << std::endl;
+
+const auto* type =
+    DataTypeImpl::TensorTypeFromONNXEnum(src_type)->GetElementType();
+
+size_t element_size = type->Size();
+
+size_t element_count = unpacked_tensor.size() / element_size;
+size_t limit = std::min<size_t>(10, element_count);
+
+std::cout << "First " << limit << " elements: ";
+
+for (size_t i = 0; i < limit; ++i) {
+  const uint8_t* ptr = unpacked_tensor.data() + i * element_size;
+
+  switch (src_type) {
+    case ONNX_NAMESPACE::TensorProto_DataType_FLOAT: {
+      float val;
+      std::memcpy(&val, ptr, sizeof(float));
+      std::cout << std::hex<< val << " ";
+      break;
+    }
+    case ONNX_NAMESPACE::TensorProto_DataType_DOUBLE: {
+      double val;
+      std::memcpy(&val, ptr, sizeof(double));
+      std::cout << std::hex<< val << " ";
+      break;
+    }
+    case ONNX_NAMESPACE::TensorProto_DataType_INT32: {
+      int32_t val;
+      std::memcpy(&val, ptr, sizeof(int32_t));
+      std::cout << std::hex<< val << " ";
+      break;
+    }
+    case ONNX_NAMESPACE::TensorProto_DataType_INT64: {
+      int64_t val;
+      std::memcpy(&val, ptr, sizeof(int64_t));
+      std::cout << std::hex<< val << " ";
+      break;
+    }
+    default:
+      std::cout << "[unsupported type] ";
+      break;
+  }
+}
+
+std::cout << std::endl;
+
+
+
 
     if (external_writer && unpacked_tensor.size() >= kMinimumSizeForExternalData) {
       // write bytes to external buffer/file and record offset for the start of the data

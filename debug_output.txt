@@ -1,0 +1,1198 @@
+-- onnxruntime_target_platform = powerpc
+-- Found Python: /opt/freeware/bin/python3.12 (found suitable version "3.12.12", minimum required is "3.10") found components: Interpreter Development.Module NumPy
+-- Loading Dependencies URLs ...
+-- Loading Dependencies ...
+-- Fetch abseil_cpp from https://github.com/abseil/abseil-cpp/archive/refs/tags/20250814.0.zip
+-- Abseil source dir:/Kushal/onnxruntime/onnxruntime/build/Linux/Release/_deps/abseil_cpp-src
+-- Fetch re2 from https://github.com/google/re2/archive/refs/tags/2024-07-02.zip
+-- Fetch googletest from https://github.com/google/googletest/archive/refs/tags/v1.17.0.zip
+-- Fetch Protobuf from https://github.com/protocolbuffers/protobuf/archive/refs/tags/v21.12.zip
+-- 
+-- 3.21.12.0
+-- Fetch date from https://github.com/HowardHinnant/date/archive/refs/tags/v3.0.1.zip
+-- Fetch mp11 from https://github.com/boostorg/mp11/archive/refs/tags/boost-1.82.0.zip
+-- Fetch nlohmann_json from https://github.com/nlohmann/json/archive/refs/tags/v3.11.3.zip
+-- Using the multi-header code from /Kushal/onnxruntime/onnxruntime/build/Linux/Release/_deps/nlohmann_json-src/include/
+-- Fetch GSL from https://github.com/microsoft/GSL/archive/refs/tags/v4.0.0.zip
+-- Fetch safeint from https://github.com/dcleblanc/SafeInt/archive/refs/tags/3.0.28.zip
+-- Fetch flatbuffers from https://github.com/google/flatbuffers/archive/refs/tags/v23.5.26.zip
+-- Proceeding with version: 23.5.26.0
+-- CMAKE_CXX_FLAGS: -pthread -m64 -D_ALL_SOURCE -mcmodel=large -DFLATBUFFERS_LITTLEENDIAN=0 -Wno-deprecate-lax-vec-conv-all -Wno-unused-but-set-variable -Wno-unused-command-line-argument -maltivec -mvsx  -Wno-unused-variable -Wno-unused-parameter -Wno-sign-compare -Wno-shorten-64-to-32 -ffunction-sections -fdata-sections
+-- Fetch pybind11_project from https://github.com/pybind/pybind11/archive/refs/tags/v2.13.6.zip
+-- pybind11 v2.13.6 
+-- Fetch onnx from https://github.com/onnx/onnx/archive/refs/tags/v1.20.1.zip
+-- Found Python: /opt/freeware/bin/python3.12 (found version "3.12.12") found components: Interpreter
+-- ONNX_PROTOC_EXECUTABLE: $<TARGET_FILE:protobuf::protoc>
+-- 
+-- ******** Summary ********
+--   CMake version                     : 4.2.0
+--   CMake command                     : /opt/freeware/bin/cmake
+--   System                            : AIX
+--   C++ compiler                      : /opt/IBM/openxlC/17.1.4/bin/ibm-clang++_r
+--   C++ compiler version              : 17.1.4.0
+--   Build type                        : Release
+--   CMAKE_INSTALL_PREFIX              : /Kushal/onnxruntime/onnxruntime/install_dir
+--   CMAKE_MODULE_PATH                 : /Kushal/onnxruntime/onnxruntime/cmake/external;/Kushal/onnxruntime/onnxruntime/build/Linux/Release/_deps/onnx-src/cmake/external
+-- 
+--   ONNX version                      : 1.20.1
+--   ONNX NAMESPACE                    : onnx
+--   ONNX_USE_LITE_PROTO               : ON
+--   ONNX_USE_PROTOBUF_SHARED_LIBS     : OFF
+--   ONNX_DISABLE_EXCEPTIONS           : OFF
+--   ONNX_DISABLE_STATIC_REGISTRATION  : OFF
+--   ONNX_WERROR                       : OFF
+--   ONNX_BUILD_TESTS                  : OFF
+--   ONNX_USE_UNITY_BUILD              : OFF
+--   BUILD_SHARED_LIBS                 : OFF
+-- 
+--   onnx compile options              : -Wall;-Wextra
+--   onnx_proto compile options        : -Wall;-Wextra
+--   onnx compile definitions          : ONNX_NAMESPACE=onnx;ONNX_ML=1;ONNX_USE_LITE_PROTO=1
+--   onnx_proto compile definitions    : ONNX_NAMESPACE=onnx;ONNX_ML=1;ONNX_USE_LITE_PROTO=1
+--   onnx link libraries               : protobuf::libprotobuf-lite
+--   onnx_proto link libraries         : protobuf::libprotobuf-lite
+-- 
+--   Protobuf version                  : 
+--   ONNX_BUILD_PYTHON                 : OFF
+-- Fetch Eigen3 from https://github.com/eigen-mirror/eigen/archive/1d8b82b0740839c0de7f1242a3585e3390ff5f33/eigen-1d8b82b0740839c0de7f1242a3585e3390ff5f33.zip
+-- 
+-- Configured Eigen 3.4.90
+-- 
+-- dlpack is enabled.
+-- Fetch dlpack from https://github.com/dmlc/dlpack/archive/5c210da409e7f1e51ddf445134a4376fdbd70d7d.zip
+-- C++11 support has been enabled by default.
+-- Finished fetching external dependencies
+-- Python Build is enabled
+-- Python_EXECUTABLE: /opt/freeware/bin/python3.12
+-- Configuring done (11.3s)
+-- Generating done (8.0s)
+-- Build files have been written to: /Kushal/onnxruntime/onnxruntime/build/Linux/Release
+[  0%] Built target absl_log_severity
+[  0%] Built target absl_utf8_for_code_point
+[  1%] Built target absl_spinlock_wait
+[  2%] Built target absl_strerror
+[  2%] Built target absl_exponential_biased
+[  2%] Built target absl_civil_time
+[  2%] Built target absl_leak_check
+[  2%] Built target onnxruntime_providers_shared
+[  2%] Built target absl_log_internal_nullguard
+[  3%] Built target flatbuffers
+[  3%] Built target absl_flags_commandlineflag_internal
+[  3%] Built target onnxruntime_mocked_allocator
+[  4%] Built target custom_op_invalid_library
+[  4%] Built target custom_op_library
+[  4%] Built target absl_raw_logging_internal
+[  5%] Built target absl_time_zone
+[  5%] Built target custom_op_get_const_input_test_library
+[  5%] Built target custom_op_local_function
+[  5%] Built target absl_debugging_internal
+[  5%] Built target absl_throw_delegate
+[  5%] Built target absl_cordz_functions
+[  5%] Built target absl_base
+[  5%] Built target absl_tracing_internal
+[  5%] Built target absl_decode_rust_punycode
+[  5%] Built target absl_malloc_internal
+[  5%] Built target absl_string_view
+[  5%] Built target absl_int128
+[  5%] Built target absl_crc_cpu_detect
+[  5%] Built target absl_log_internal_conditions
+[  5%] Built target absl_strings_internal
+[  6%] Built target absl_demangle_rust
+[  6%] Built target absl_stacktrace
+[  6%] Built target absl_city
+[  6%] Built target absl_graphcycles_internal
+[  6%] Built target absl_demangle_internal
+[  6%] Built target absl_crc_internal
+[  8%] Built target libprotobuf-lite
+[ 10%] Built target flatc
+[ 11%] Built target absl_strings
+[ 11%] Built target absl_symbolize
+[ 14%] Built target onnxruntime_mlas
+[ 14%] Built target absl_flags_commandlineflag
+[ 15%] Built target absl_hash
+[ 15%] Built target absl_log_internal_proto
+[ 15%] Built target absl_log_internal_fnmatch
+[ 15%] Built target absl_examine_stack
+[ 15%] Built target absl_time
+[ 15%] Built target absl_flags_private_handle_accessor
+[ 15%] Built target absl_log_internal_structured_proto
+[ 15%] Built target absl_failure_signal_handler
+[ 15%] Built target absl_str_format_internal
+[ 15%] Built target absl_log_entry
+[ 15%] Built target absl_log_internal_globals
+[ 15%] Built target absl_kernel_timeout_internal
+[ 15%] Built target absl_log_sink
+[ 16%] Built target absl_flags_marshalling
+[ 16%] Built target absl_log_internal_format
+[ 16%] Built target absl_crc32c
+[ 17%] Built target absl_crc_cord_state
+[ 18%] Built target absl_synchronization
+[ 19%] Built target absl_cord_internal
+[ 19%] Built target absl_vlog_config_internal
+[ 19%] Built target absl_flags_program_name
+[ 19%] Built target absl_cordz_handle
+[ 19%] Built target absl_hashtablez_sampler
+[ 20%] Built target absl_log_globals
+[ 20%] Built target absl_flags_config
+[ 20%] Built target absl_cordz_info
+[ 20%] Built target absl_log_internal_log_sink_set
+[ 20%] Built target absl_flags_internal
+[ 20%] Built target absl_cord
+[ 21%] Built target absl_log_internal_message
+[ 21%] Built target absl_raw_hash_set
+[ 21%] Built target absl_log_internal_check_op
+[ 21%] Built target absl_flags_reflection
+[ 26%] Built target libprotobuf
+[ 26%] Built target absl_flags_usage_internal
+[ 26%] Built target absl_flags_usage
+[ 26%] Built target absl_flags_parse
+[ 27%] Built target re2
+[ 27%] Built target gtest
+[ 27%] Built target gmock
+[ 33%] Built target libprotoc
+[ 33%] Built target protoc
+[ 34%] Built target onnx_proto
+[ 34%] Built target onnxruntime_flatbuffers
+[ 34%] Built target onnxruntime_lora
+[ 34%] Built target onnx_test_data_proto
+[ 35%] Built target onnxruntime_util
+[ 36%] Built target onnxruntime_test_utils
+[ 37%] Built target onnx_test_runner_common
+[ 38%] Built target onnxruntime_common
+[ 38%] Built target onnxruntime_mlas_q4dq
+[ 38%] Built target onnxruntime_runtime_path_test_shared_library
+[ 40%] Built target onnxruntime_session
+[ 43%] Built target onnx
+[ 45%] Built target onnxruntime_graph
+[ 46%] Built target test_execution_provider
+[ 48%] Built target onnxruntime_mlas_test
+[ 53%] Built target onnxruntime_framework
+[ 59%] Built target onnxruntime_optimizer
+[ 73%] Built target onnxruntime_providers
+[ 73%] Built target onnx_test_runner
+[ 73%] Linking CXX shared library libonnxruntime.a
+[ 73%] Built target onnxruntime_unittest_utils
+[ 73%] Built target onnxruntime
+[ 73%] Linking CXX executable onnxruntime_global_thread_pools_test
+[ 73%] Linking CXX executable onnxruntime_customopregistration_test
+[ 73%] Linking CXX shared module libexample_plugin_ep_virt_gpu.so
+[ 73%] Linking CXX shared module libexample_plugin_ep.so
+[ 73%] Built target example_plugin_ep_virt_gpu
+[ 73%] Linking CXX shared module libexample_plugin_ep_kernel_registry.so
+[ 73%] Linking CXX executable onnxruntime_perf_test
+[ 73%] Linking CXX executable onnxruntime_logging_apis_test
+[ 73%] Linking CXX executable onnxruntime_shared_lib_test
+[ 73%] Built target example_plugin_ep
+[ 74%] Built target onnxruntime_pybind11_state
+[ 74%] Building CXX object CMakeFiles/onnxruntime_test_all.dir/Kushal/onnxruntime/onnxruntime/onnxruntime/test/framework/function_test.cc.o
+[ 75%] Building CXX object CMakeFiles/onnxruntime_test_all.dir/Kushal/onnxruntime/onnxruntime/onnxruntime/test/framework/inference_session_test.cc.o
+[ 75%] Linking CXX executable onnxruntime_ep_graph_test
+[ 76%] Built target example_plugin_ep_kernel_registry
+[ 76%] Building CXX object CMakeFiles/onnxruntime_test_all.dir/Kushal/onnxruntime/onnxruntime/onnxruntime/test/framework/insert_cast_transformer_test.cc.o
+[ 77%] Built target onnxruntime_perf_test
+[ 77%] Building CXX object CMakeFiles/onnxruntime_test_all.dir/Kushal/onnxruntime/onnxruntime/onnxruntime/test/framework/kernel_registry_test.cc.o
+[ 77%] Built target onnxruntime_customopregistration_test
+[ 77%] Building CXX object CMakeFiles/onnxruntime_test_all.dir/Kushal/onnxruntime/onnxruntime/onnxruntime/test/framework/local_kernel_registry_test.cc.o
+[ 78%] Built target onnxruntime_global_thread_pools_test
+[ 78%] Building CXX object CMakeFiles/onnxruntime_test_all.dir/Kushal/onnxruntime/onnxruntime/onnxruntime/test/framework/mem_pattern_planner_test.cc.o
+[ 78%] Built target onnxruntime_logging_apis_test
+[ 78%] Building CXX object CMakeFiles/onnxruntime_test_all.dir/Kushal/onnxruntime/onnxruntime/onnxruntime/test/framework/memcpy_transformer_test.cc.o
+[ 79%] Built target onnxruntime_shared_lib_test
+[ 79%] Linking CXX executable onnxruntime_autoep_test
+[ 80%] Built target onnxruntime_ep_graph_test
+[ 80%] Building CXX object CMakeFiles/onnxruntime_test_all.dir/Kushal/onnxruntime/onnxruntime/onnxruntime/test/framework/opaque_kernels_test.cc.o
+[ 81%] Built target onnxruntime_autoep_test
+[ 81%] Building CXX object CMakeFiles/onnxruntime_test_all.dir/Kushal/onnxruntime/onnxruntime/onnxruntime/test/framework/ort_model_only_test.cc.o
+[ 82%] Building CXX object CMakeFiles/onnxruntime_provider_test.dir/Kushal/onnxruntime/onnxruntime/onnxruntime/test/contrib_ops/gather_block_quantized_op_test.cc.o
+[ 82%] Building CXX object CMakeFiles/onnxruntime_provider_test.dir/Kushal/onnxruntime/onnxruntime/onnxruntime/test/contrib_ops/gemm_float8_test.cc.o
+[ 82%] Building CXX object CMakeFiles/onnxruntime_provider_test.dir/Kushal/onnxruntime/onnxruntime/onnxruntime/test/contrib_ops/gemma_rotary_emb_test.cc.o
+[ 82%] Building CXX object CMakeFiles/onnxruntime_test_all.dir/Kushal/onnxruntime/onnxruntime/onnxruntime/test/framework/parallel_executor_test.cc.o
+[ 82%] Building CXX object CMakeFiles/onnxruntime_provider_test.dir/Kushal/onnxruntime/onnxruntime/onnxruntime/test/contrib_ops/gridsample_test.cc.o
+[ 82%] Building CXX object CMakeFiles/onnxruntime_provider_test.dir/Kushal/onnxruntime/onnxruntime/onnxruntime/test/contrib_ops/group_norm_op_test.cc.o
+[ 82%] Building CXX object CMakeFiles/onnxruntime_provider_test.dir/Kushal/onnxruntime/onnxruntime/onnxruntime/test/contrib_ops/inverse_test.cc.o
+[ 82%] Building CXX object CMakeFiles/onnxruntime_test_all.dir/Kushal/onnxruntime/onnxruntime/onnxruntime/test/framework/save_model_with_external_initializers.cc.o
+[ 82%] Building CXX object CMakeFiles/onnxruntime_test_all.dir/Kushal/onnxruntime/onnxruntime/onnxruntime/test/framework/session_state_test.cc.o
+[ 83%] Building CXX object CMakeFiles/onnxruntime_test_all.dir/Kushal/onnxruntime/onnxruntime/onnxruntime/test/framework/shape_inference_test.cc.o
+[ 83%] Building CXX object CMakeFiles/onnxruntime_test_all.dir/Kushal/onnxruntime/onnxruntime/onnxruntime/test/framework/sparse_kernels_test.cc.o
+[ 83%] Building CXX object CMakeFiles/onnxruntime_test_all.dir/Kushal/onnxruntime/onnxruntime/onnxruntime/test/framework/type_info_test.cc.o
+[ 84%] Building CXX object CMakeFiles/onnxruntime_test_all.dir/Kushal/onnxruntime/onnxruntime/onnxruntime/test/opaque_api/test_opaque_api.cc.o
+[ 84%] Building CXX object CMakeFiles/onnxruntime_test_all.dir/Kushal/onnxruntime/onnxruntime/onnxruntime/test/internal_testing_ep/internal_testing_ep_static_kernels.cc.o
+[ 84%] Building CXX object CMakeFiles/onnxruntime_provider_test.dir/Kushal/onnxruntime/onnxruntime/onnxruntime/test/contrib_ops/layer_norm_op_test.cc.o
+[ 84%] Building CXX object CMakeFiles/onnxruntime_test_all.dir/Kushal/onnxruntime/onnxruntime/onnxruntime/test/internal_testing_ep/internal_testing_execution_provider.cc.o
+[ 84%] Building CXX object CMakeFiles/onnxruntime_test_all.dir/Kushal/onnxruntime/onnxruntime/onnxruntime/test/internal_testing_ep/internal_testing_partitioning_tests.cc.o
+[ 84%] Building CXX object CMakeFiles/onnxruntime_provider_test.dir/Kushal/onnxruntime/onnxruntime/onnxruntime/test/contrib_ops/layer_norm_test.cc.o
+[ 84%] Building CXX object CMakeFiles/onnxruntime_test_all.dir/Kushal/onnxruntime/onnxruntime/onnxruntime/test/internal_testing_ep/internal_testing_tests.cc.o
+[ 84%] Building CXX object CMakeFiles/onnxruntime_provider_test.dir/Kushal/onnxruntime/onnxruntime/onnxruntime/test/contrib_ops/longformer_attention_op_format0_test.cc.o
+[ 84%] Building CXX object CMakeFiles/onnxruntime_provider_test.dir/Kushal/onnxruntime/onnxruntime/onnxruntime/test/contrib_ops/longformer_attention_op_test.cc.o
+[ 84%] Building CXX object CMakeFiles/onnxruntime_provider_test.dir/Kushal/onnxruntime/onnxruntime/onnxruntime/test/contrib_ops/math/matmul_sparse_test.cc.o
+[ 84%] Building CXX object CMakeFiles/onnxruntime_provider_test.dir/Kushal/onnxruntime/onnxruntime/onnxruntime/test/contrib_ops/matmul_2bits_test.cc.o
+[ 84%] Building CXX object CMakeFiles/onnxruntime_provider_test.dir/Kushal/onnxruntime/onnxruntime/onnxruntime/test/contrib_ops/matmul_4bits_test.cc.o
+[ 84%] Building CXX object CMakeFiles/onnxruntime_provider_test.dir/Kushal/onnxruntime/onnxruntime/onnxruntime/test/contrib_ops/matmul_8bits_test.cc.o
+[ 84%] Building CXX object CMakeFiles/onnxruntime_provider_test.dir/Kushal/onnxruntime/onnxruntime/onnxruntime/test/contrib_ops/matmul_bnb4_test.cc.o
+[ 85%] Building CXX object CMakeFiles/onnxruntime_provider_test.dir/Kushal/onnxruntime/onnxruntime/onnxruntime/test/contrib_ops/matmul_fpq4_test.cc.o
+[ 85%] Building CXX object CMakeFiles/onnxruntime_provider_test.dir/Kushal/onnxruntime/onnxruntime/onnxruntime/test/contrib_ops/matmul_integer16_test.cc.o
+[ 85%] Building CXX object CMakeFiles/onnxruntime_provider_test.dir/Kushal/onnxruntime/onnxruntime/onnxruntime/test/contrib_ops/matmul_integer_to_float_test.cc.o
+[ 85%] Building CXX object CMakeFiles/onnxruntime_provider_test.dir/Kushal/onnxruntime/onnxruntime/onnxruntime/test/contrib_ops/maxpool_mask_test.cc.o
+[ 85%] Building CXX object CMakeFiles/onnxruntime_provider_test.dir/Kushal/onnxruntime/onnxruntime/onnxruntime/test/contrib_ops/moe_test.cc.o
+[ 85%] Building CXX object CMakeFiles/onnxruntime_provider_test.dir/Kushal/onnxruntime/onnxruntime/onnxruntime/test/contrib_ops/multihead_attention_op_test.cc.o
+[ 85%] Building CXX object CMakeFiles/onnxruntime_provider_test.dir/Kushal/onnxruntime/onnxruntime/onnxruntime/test/contrib_ops/murmur_hash3_test.cc.o
+[ 85%] Building CXX object CMakeFiles/onnxruntime_provider_test.dir/Kushal/onnxruntime/onnxruntime/onnxruntime/test/contrib_ops/ngram_repeat_block_op_test.cc.o
+[ 85%] Linking CXX executable onnxruntime_test_all
+[ 85%] Building CXX object CMakeFiles/onnxruntime_provider_test.dir/Kushal/onnxruntime/onnxruntime/onnxruntime/test/contrib_ops/nhwc_conv_op_test.cc.o
+[ 85%] Building CXX object CMakeFiles/onnxruntime_provider_test.dir/Kushal/onnxruntime/onnxruntime/onnxruntime/test/contrib_ops/nhwc_maxpool_op_test.cc.o
+[ 85%] Building CXX object CMakeFiles/onnxruntime_provider_test.dir/Kushal/onnxruntime/onnxruntime/onnxruntime/test/contrib_ops/nhwc_pool_in_op_test.cc.o
+[ 88%] Built target onnxruntime_test_all
+[ 88%] Building CXX object CMakeFiles/onnxruntime_provider_test.dir/Kushal/onnxruntime/onnxruntime/onnxruntime/test/contrib_ops/op_reg_test.cc.o
+[ 88%] Building CXX object CMakeFiles/onnxruntime_provider_test.dir/Kushal/onnxruntime/onnxruntime/onnxruntime/test/contrib_ops/packed_attention_op_test.cc.o
+[ 88%] Building CXX object CMakeFiles/onnxruntime_provider_test.dir/Kushal/onnxruntime/onnxruntime/onnxruntime/test/contrib_ops/packed_multihead_attention_op_test.cc.o
+[ 88%] Building CXX object CMakeFiles/onnxruntime_provider_test.dir/Kushal/onnxruntime/onnxruntime/onnxruntime/test/contrib_ops/qembed_layer_norm_op_test.cc.o
+[ 88%] Building CXX object CMakeFiles/onnxruntime_provider_test.dir/Kushal/onnxruntime/onnxruntime/onnxruntime/test/contrib_ops/qlinear_binary_op_test.cc.o
+[ 88%] Building CXX object CMakeFiles/onnxruntime_provider_test.dir/Kushal/onnxruntime/onnxruntime/onnxruntime/test/contrib_ops/qlinear_concat_test.cc.o
+[ 89%] Building CXX object CMakeFiles/onnxruntime_provider_test.dir/Kushal/onnxruntime/onnxruntime/onnxruntime/test/contrib_ops/qlinear_global_average_pool_test.cc.o
+[ 89%] Building CXX object CMakeFiles/onnxruntime_provider_test.dir/Kushal/onnxruntime/onnxruntime/onnxruntime/test/contrib_ops/qlinear_lookup_table_test.cc.o
+[ 89%] Building CXX object CMakeFiles/onnxruntime_provider_test.dir/Kushal/onnxruntime/onnxruntime/onnxruntime/test/contrib_ops/qlinear_pool_test.cc.o
+[ 89%] Building CXX object CMakeFiles/onnxruntime_provider_test.dir/Kushal/onnxruntime/onnxruntime/onnxruntime/test/contrib_ops/qlinear_where_test.cc.o
+[ 89%] Building CXX object CMakeFiles/onnxruntime_provider_test.dir/Kushal/onnxruntime/onnxruntime/onnxruntime/test/contrib_ops/qordered_attention_test.cc.o
+[ 89%] Building CXX object CMakeFiles/onnxruntime_provider_test.dir/Kushal/onnxruntime/onnxruntime/onnxruntime/test/contrib_ops/qordered_gelu_op_test.cc.o
+[ 89%] Building CXX object CMakeFiles/onnxruntime_provider_test.dir/Kushal/onnxruntime/onnxruntime/onnxruntime/test/contrib_ops/qordered_layer_norm_op_test.cc.o
+[ 89%] Building CXX object CMakeFiles/onnxruntime_provider_test.dir/Kushal/onnxruntime/onnxruntime/onnxruntime/test/contrib_ops/qordered_longformer_attention_op_test.cc.o
+[ 89%] Building CXX object CMakeFiles/onnxruntime_provider_test.dir/Kushal/onnxruntime/onnxruntime/onnxruntime/test/contrib_ops/qordered_matmul_op_test.cc.o
+[ 89%] Building CXX object CMakeFiles/onnxruntime_provider_test.dir/Kushal/onnxruntime/onnxruntime/onnxruntime/test/contrib_ops/qordered_qdq_op_test.cc.o
+[ 89%] Building CXX object CMakeFiles/onnxruntime_provider_test.dir/Kushal/onnxruntime/onnxruntime/onnxruntime/test/contrib_ops/quant_gemm_test.cc.o
+[ 89%] Building CXX object CMakeFiles/onnxruntime_provider_test.dir/Kushal/onnxruntime/onnxruntime/onnxruntime/test/contrib_ops/quantize_attention_op_test.cc.o
+[ 89%] Building CXX object CMakeFiles/onnxruntime_provider_test.dir/Kushal/onnxruntime/onnxruntime/onnxruntime/test/contrib_ops/quantize_bfp_test.cc.o
+[ 89%] Building CXX object CMakeFiles/onnxruntime_provider_test.dir/Kushal/onnxruntime/onnxruntime/onnxruntime/test/contrib_ops/quantize_lstm_op_test.cc.o
+[ 89%] Building CXX object CMakeFiles/onnxruntime_provider_test.dir/Kushal/onnxruntime/onnxruntime/onnxruntime/test/contrib_ops/quantize_ops_test.cc.o
+[ 89%] Building CXX object CMakeFiles/onnxruntime_provider_test.dir/Kushal/onnxruntime/onnxruntime/onnxruntime/test/contrib_ops/relative_attention_bias_test.cc.o
+[ 89%] Building CXX object CMakeFiles/onnxruntime_provider_test.dir/Kushal/onnxruntime/onnxruntime/onnxruntime/test/contrib_ops/remove_padding_op_test.cc.o
+[ 90%] Building CXX object CMakeFiles/onnxruntime_provider_test.dir/Kushal/onnxruntime/onnxruntime/onnxruntime/test/contrib_ops/restore_padding_op_test.cc.o
+[ 90%] Building CXX object CMakeFiles/onnxruntime_provider_test.dir/Kushal/onnxruntime/onnxruntime/onnxruntime/test/contrib_ops/rotary_embedding_op_test.cc.o
+[ 90%] Building CXX object CMakeFiles/onnxruntime_provider_test.dir/Kushal/onnxruntime/onnxruntime/onnxruntime/test/contrib_ops/sample_op_test.cc.o
+[ 90%] Building CXX object CMakeFiles/onnxruntime_provider_test.dir/Kushal/onnxruntime/onnxruntime/onnxruntime/test/contrib_ops/skip_group_norm_op_test.cc.o
+[ 90%] Building CXX object CMakeFiles/onnxruntime_provider_test.dir/Kushal/onnxruntime/onnxruntime/onnxruntime/test/contrib_ops/skiplayernorm_op_test.cc.o
+[ 90%] Building CXX object CMakeFiles/onnxruntime_provider_test.dir/Kushal/onnxruntime/onnxruntime/onnxruntime/test/contrib_ops/tensor_op_test.cc.o
+[ 90%] Building CXX object CMakeFiles/onnxruntime_provider_test.dir/Kushal/onnxruntime/onnxruntime/onnxruntime/test/contrib_ops/tokenizer_test.cc.o
+[ 90%] Building CXX object CMakeFiles/onnxruntime_provider_test.dir/Kushal/onnxruntime/onnxruntime/onnxruntime/test/contrib_ops/torch_embedding_shape_inference_test.cc.o
+[ 90%] Building CXX object CMakeFiles/onnxruntime_provider_test.dir/Kushal/onnxruntime/onnxruntime/onnxruntime/test/contrib_ops/trilu_test.cc.o
+[ 90%] Building CXX object CMakeFiles/onnxruntime_provider_test.dir/Kushal/onnxruntime/onnxruntime/onnxruntime/test/contrib_ops/unique_op_test.cc.o
+[ 90%] Building CXX object CMakeFiles/onnxruntime_provider_test.dir/Kushal/onnxruntime/onnxruntime/onnxruntime/test/contrib_ops/word_conv_embedding_test.cc.o
+[ 90%] Building CXX object CMakeFiles/onnxruntime_provider_test.dir/Kushal/onnxruntime/onnxruntime/onnxruntime/test/providers/compare_provider_test_utils.cc.o
+[ 90%] Building CXX object CMakeFiles/onnxruntime_provider_test.dir/Kushal/onnxruntime/onnxruntime/onnxruntime/test/providers/io_binding_test.cc.o
+[ 90%] Building CXX object CMakeFiles/onnxruntime_provider_test.dir/Kushal/onnxruntime/onnxruntime/onnxruntime/test/providers/memcpy_test.cc.o
+[ 90%] Building CXX object CMakeFiles/onnxruntime_provider_test.dir/Kushal/onnxruntime/onnxruntime/onnxruntime/test/providers/partitioning_utils_test.cc.o
+[ 90%] Building CXX object CMakeFiles/onnxruntime_provider_test.dir/Kushal/onnxruntime/onnxruntime/onnxruntime/test/providers/cpu/activation/activation_op_test.cc.o
+[ 90%] Building CXX object CMakeFiles/onnxruntime_provider_test.dir/Kushal/onnxruntime/onnxruntime/onnxruntime/test/providers/cpu/controlflow/if_test.cc.o
+[ 90%] Building CXX object CMakeFiles/onnxruntime_provider_test.dir/Kushal/onnxruntime/onnxruntime/onnxruntime/test/providers/cpu/controlflow/loop_test.cc.o
+[ 90%] Building CXX object CMakeFiles/onnxruntime_provider_test.dir/Kushal/onnxruntime/onnxruntime/onnxruntime/test/providers/cpu/controlflow/scan_test.cc.o
+[ 90%] Building CXX object CMakeFiles/onnxruntime_provider_test.dir/Kushal/onnxruntime/onnxruntime/onnxruntime/test/providers/cpu/generator/constant_of_shape_test.cc.o
+[ 90%] Building CXX object CMakeFiles/onnxruntime_provider_test.dir/Kushal/onnxruntime/onnxruntime/onnxruntime/test/providers/cpu/generator/random_test.cc.o
+[ 90%] Building CXX object CMakeFiles/onnxruntime_provider_test.dir/Kushal/onnxruntime/onnxruntime/onnxruntime/test/providers/cpu/generator/range_test.cc.o
+[ 90%] Building CXX object CMakeFiles/onnxruntime_provider_test.dir/Kushal/onnxruntime/onnxruntime/onnxruntime/test/providers/cpu/llm/attention_op_test.cc.o
+[ 90%] Building CXX object CMakeFiles/onnxruntime_provider_test.dir/Kushal/onnxruntime/onnxruntime/onnxruntime/test/providers/cpu/llm/rotary_embedding_op_test.cc.o
+[ 90%] Building CXX object CMakeFiles/onnxruntime_provider_test.dir/Kushal/onnxruntime/onnxruntime/onnxruntime/test/providers/cpu/math/clip_test.cc.o
+[ 90%] Building CXX object CMakeFiles/onnxruntime_provider_test.dir/Kushal/onnxruntime/onnxruntime/onnxruntime/test/providers/cpu/math/cumsum_test.cc.o
+[ 90%] Building CXX object CMakeFiles/onnxruntime_provider_test.dir/Kushal/onnxruntime/onnxruntime/onnxruntime/test/providers/cpu/math/det_op_test.cc.o
+[ 91%] Building CXX object CMakeFiles/onnxruntime_provider_test.dir/Kushal/onnxruntime/onnxruntime/onnxruntime/test/providers/cpu/math/einsum_test.cc.o
+[ 91%] Building CXX object CMakeFiles/onnxruntime_provider_test.dir/Kushal/onnxruntime/onnxruntime/onnxruntime/test/providers/cpu/math/element_wise_ops_test.cc.o
+[ 91%] Building CXX object CMakeFiles/onnxruntime_provider_test.dir/Kushal/onnxruntime/onnxruntime/onnxruntime/test/providers/cpu/math/gemm_test.cc.o
+[ 91%] Building CXX object CMakeFiles/onnxruntime_provider_test.dir/Kushal/onnxruntime/onnxruntime/onnxruntime/test/providers/cpu/math/hardmax_test.cc.o
+[ 91%] Building CXX object CMakeFiles/onnxruntime_provider_test.dir/Kushal/onnxruntime/onnxruntime/onnxruntime/test/providers/cpu/math/logsoftmax_test.cc.o
+[ 91%] Building CXX object CMakeFiles/onnxruntime_provider_test.dir/Kushal/onnxruntime/onnxruntime/onnxruntime/test/providers/cpu/math/matmul_fastmath_test.cc.o
+[ 91%] Building CXX object CMakeFiles/onnxruntime_provider_test.dir/Kushal/onnxruntime/onnxruntime/onnxruntime/test/providers/cpu/math/matmul_integer_test.cc.o
+[ 91%] Building CXX object CMakeFiles/onnxruntime_provider_test.dir/Kushal/onnxruntime/onnxruntime/onnxruntime/test/providers/cpu/math/matmul_test.cc.o
+[ 91%] Building CXX object CMakeFiles/onnxruntime_provider_test.dir/Kushal/onnxruntime/onnxruntime/onnxruntime/test/providers/cpu/math/quantize_linear_matmul_test.cc.o
+[ 91%] Building CXX object CMakeFiles/onnxruntime_provider_test.dir/Kushal/onnxruntime/onnxruntime/onnxruntime/test/providers/cpu/math/round_test.cc.o
+[ 91%] Building CXX object CMakeFiles/onnxruntime_provider_test.dir/Kushal/onnxruntime/onnxruntime/onnxruntime/test/providers/cpu/math/sign_test.cc.o
+[ 91%] Building CXX object CMakeFiles/onnxruntime_provider_test.dir/Kushal/onnxruntime/onnxruntime/onnxruntime/test/providers/cpu/math/softmax_test.cc.o
+[ 91%] Building CXX object CMakeFiles/onnxruntime_provider_test.dir/Kushal/onnxruntime/onnxruntime/onnxruntime/test/providers/cpu/math/topk_op_test.cc.o
+[ 91%] Building CXX object CMakeFiles/onnxruntime_provider_test.dir/Kushal/onnxruntime/onnxruntime/onnxruntime/test/providers/cpu/ml/array_feature_extractor_test.cc.o
+[ 91%] Building CXX object CMakeFiles/onnxruntime_provider_test.dir/Kushal/onnxruntime/onnxruntime/onnxruntime/test/providers/cpu/ml/binarizer_test.cc.o
+[ 91%] Building CXX object CMakeFiles/onnxruntime_provider_test.dir/Kushal/onnxruntime/onnxruntime/onnxruntime/test/providers/cpu/ml/cast_map_test.cc.o
+[ 92%] Building CXX object CMakeFiles/onnxruntime_provider_test.dir/Kushal/onnxruntime/onnxruntime/onnxruntime/test/providers/cpu/ml/category_mapper_test.cc.o
+[ 92%] Building CXX object CMakeFiles/onnxruntime_provider_test.dir/Kushal/onnxruntime/onnxruntime/onnxruntime/test/providers/cpu/ml/dictvectorizer_test.cc.o
+[ 92%] Building CXX object CMakeFiles/onnxruntime_provider_test.dir/Kushal/onnxruntime/onnxruntime/onnxruntime/test/providers/cpu/ml/feature_vectorizer_test.cc.o
+[ 92%] Building CXX object CMakeFiles/onnxruntime_provider_test.dir/Kushal/onnxruntime/onnxruntime/onnxruntime/test/providers/cpu/ml/imputer_test.cc.o
+[ 92%] Building CXX object CMakeFiles/onnxruntime_provider_test.dir/Kushal/onnxruntime/onnxruntime/onnxruntime/test/providers/cpu/ml/label_encoder_test.cc.o
+[ 92%] Building CXX object CMakeFiles/onnxruntime_provider_test.dir/Kushal/onnxruntime/onnxruntime/onnxruntime/test/providers/cpu/ml/linearclassifer_test.cc.o
+[ 92%] Building CXX object CMakeFiles/onnxruntime_provider_test.dir/Kushal/onnxruntime/onnxruntime/onnxruntime/test/providers/cpu/ml/linearregressor_test.cc.o
+[ 92%] Building CXX object CMakeFiles/onnxruntime_provider_test.dir/Kushal/onnxruntime/onnxruntime/onnxruntime/test/providers/cpu/ml/normalizer_test.cc.o
+[ 92%] Building CXX object CMakeFiles/onnxruntime_provider_test.dir/Kushal/onnxruntime/onnxruntime/onnxruntime/test/providers/cpu/ml/onehotencoder_test.cc.o
+[ 92%] Building CXX object CMakeFiles/onnxruntime_provider_test.dir/Kushal/onnxruntime/onnxruntime/onnxruntime/test/providers/cpu/ml/scaler_test.cc.o
+[ 92%] Building CXX object CMakeFiles/onnxruntime_provider_test.dir/Kushal/onnxruntime/onnxruntime/onnxruntime/test/providers/cpu/ml/svmclassifier_test.cc.o
+[ 92%] Building CXX object CMakeFiles/onnxruntime_provider_test.dir/Kushal/onnxruntime/onnxruntime/onnxruntime/test/providers/cpu/ml/svmregressor_test.cc.o
+[ 92%] Building CXX object CMakeFiles/onnxruntime_provider_test.dir/Kushal/onnxruntime/onnxruntime/onnxruntime/test/providers/cpu/ml/tree_ensembler_classifier_test.cc.o
+[ 92%] Building CXX object CMakeFiles/onnxruntime_provider_test.dir/Kushal/onnxruntime/onnxruntime/onnxruntime/test/providers/cpu/ml/tree_ensembler_test.cc.o
+[ 92%] Building CXX object CMakeFiles/onnxruntime_provider_test.dir/Kushal/onnxruntime/onnxruntime/onnxruntime/test/providers/cpu/ml/treeregressor_test.cc.o
+[ 92%] Building CXX object CMakeFiles/onnxruntime_provider_test.dir/Kushal/onnxruntime/onnxruntime/onnxruntime/test/providers/cpu/ml/write_scores_test.cc.o
+[ 92%] Building CXX object CMakeFiles/onnxruntime_provider_test.dir/Kushal/onnxruntime/onnxruntime/onnxruntime/test/providers/cpu/ml/zipmap_test.cc.o
+[ 93%] Building CXX object CMakeFiles/onnxruntime_provider_test.dir/Kushal/onnxruntime/onnxruntime/onnxruntime/test/providers/cpu/model_tests.cc.o
+[ 93%] Building CXX object CMakeFiles/onnxruntime_provider_test.dir/Kushal/onnxruntime/onnxruntime/onnxruntime/test/providers/cpu/nn/batch_norm_op_test.cc.o
+[ 93%] Building CXX object CMakeFiles/onnxruntime_provider_test.dir/Kushal/onnxruntime/onnxruntime/onnxruntime/test/providers/cpu/nn/conv_integer_test.cc.o
+[ 93%] Building CXX object CMakeFiles/onnxruntime_provider_test.dir/Kushal/onnxruntime/onnxruntime/onnxruntime/test/providers/cpu/nn/conv_op_test.cc.o
+[ 93%] Building CXX object CMakeFiles/onnxruntime_provider_test.dir/Kushal/onnxruntime/onnxruntime/onnxruntime/test/providers/cpu/nn/conv_transpose_op_test.cc.o
+[ 93%] Building CXX object CMakeFiles/onnxruntime_provider_test.dir/Kushal/onnxruntime/onnxruntime/onnxruntime/test/providers/cpu/nn/dropout_op_test.cc.o
+[ 93%] Building CXX object CMakeFiles/onnxruntime_provider_test.dir/Kushal/onnxruntime/onnxruntime/onnxruntime/test/providers/cpu/nn/flatten_op_test.cc.o
+[ 93%] Building CXX object CMakeFiles/onnxruntime_provider_test.dir/Kushal/onnxruntime/onnxruntime/onnxruntime/test/providers/cpu/nn/group_norm_op_test.cc.o
+[ 93%] Building CXX object CMakeFiles/onnxruntime_provider_test.dir/Kushal/onnxruntime/onnxruntime/onnxruntime/test/providers/cpu/nn/instance_norm_op_test.cc.o
+[ 93%] Building CXX object CMakeFiles/onnxruntime_provider_test.dir/Kushal/onnxruntime/onnxruntime/onnxruntime/test/providers/cpu/nn/lp_norm_op_test.cc.o
+[ 93%] Building CXX object CMakeFiles/onnxruntime_provider_test.dir/Kushal/onnxruntime/onnxruntime/onnxruntime/test/providers/cpu/nn/lrn_op_test.cc.o
+[ 93%] Building CXX object CMakeFiles/onnxruntime_provider_test.dir/Kushal/onnxruntime/onnxruntime/onnxruntime/test/providers/cpu/nn/max_roi_pool_op_test.cc.o
+[ 93%] Building CXX object CMakeFiles/onnxruntime_provider_test.dir/Kushal/onnxruntime/onnxruntime/onnxruntime/test/providers/cpu/nn/pool_op_test.cc.o
+[ 93%] Building CXX object CMakeFiles/onnxruntime_provider_test.dir/Kushal/onnxruntime/onnxruntime/onnxruntime/test/providers/cpu/nn/qlinearconv_op_test.cc.o
+[ 93%] Building CXX object CMakeFiles/onnxruntime_provider_test.dir/Kushal/onnxruntime/onnxruntime/onnxruntime/test/providers/cpu/nn/rms_norm_op_test.cc.o
+[ 94%] Building CXX object CMakeFiles/onnxruntime_provider_test.dir/Kushal/onnxruntime/onnxruntime/onnxruntime/test/providers/cpu/nn/shrink_test.cc.o
+[ 94%] Building CXX object CMakeFiles/onnxruntime_provider_test.dir/Kushal/onnxruntime/onnxruntime/onnxruntime/test/providers/cpu/nn/tfidfvectorizer_test.cc.o
+[ 94%] Building CXX object CMakeFiles/onnxruntime_provider_test.dir/Kushal/onnxruntime/onnxruntime/onnxruntime/test/providers/cpu/nn/unpool_op_test.cc.o
+[ 94%] Building CXX object CMakeFiles/onnxruntime_provider_test.dir/Kushal/onnxruntime/onnxruntime/onnxruntime/test/providers/cpu/object_detection/non_max_suppression_test.cc.o
+[ 94%] Building CXX object CMakeFiles/onnxruntime_provider_test.dir/Kushal/onnxruntime/onnxruntime/onnxruntime/test/providers/cpu/object_detection/roialign_test.cc.o
+[ 94%] Building CXX object CMakeFiles/onnxruntime_provider_test.dir/Kushal/onnxruntime/onnxruntime/onnxruntime/test/providers/cpu/optional/optional_ops_test.cc.o
+[ 94%] Building CXX object CMakeFiles/onnxruntime_provider_test.dir/Kushal/onnxruntime/onnxruntime/onnxruntime/test/providers/cpu/reduction/reduction_ops_test.cc.o
+[ 94%] Building CXX object CMakeFiles/onnxruntime_provider_test.dir/Kushal/onnxruntime/onnxruntime/onnxruntime/test/providers/cpu/rnn/deep_cpu_gru_op_test.cc.o
+[ 94%] Building CXX object CMakeFiles/onnxruntime_provider_test.dir/Kushal/onnxruntime/onnxruntime/onnxruntime/test/providers/cpu/rnn/deep_cpu_lstm_op_test.cc.o
+[ 94%] Building CXX object CMakeFiles/onnxruntime_provider_test.dir/Kushal/onnxruntime/onnxruntime/onnxruntime/test/providers/cpu/rnn/rnn_op_test.cc.o
+[ 94%] Building CXX object CMakeFiles/onnxruntime_provider_test.dir/Kushal/onnxruntime/onnxruntime/onnxruntime/test/providers/cpu/sequence/concat_from_sequence_op_test.cc.o
+[ 94%] Building CXX object CMakeFiles/onnxruntime_provider_test.dir/Kushal/onnxruntime/onnxruntime/onnxruntime/test/providers/cpu/sequence/sequence_ops_test.cc.o
+[ 94%] Building CXX object CMakeFiles/onnxruntime_provider_test.dir/Kushal/onnxruntime/onnxruntime/onnxruntime/test/providers/cpu/signal/signal_ops_test.cc.o
+[ 94%] Building CXX object CMakeFiles/onnxruntime_provider_test.dir/Kushal/onnxruntime/onnxruntime/onnxruntime/test/providers/cpu/tensor/affine_grid_test.cc.o
+[ 94%] Building CXX object CMakeFiles/onnxruntime_provider_test.dir/Kushal/onnxruntime/onnxruntime/onnxruntime/test/providers/cpu/tensor/cast_op_test.cc.o
+[ 94%] Building CXX object CMakeFiles/onnxruntime_provider_test.dir/Kushal/onnxruntime/onnxruntime/onnxruntime/test/providers/cpu/tensor/col2im_test.cc.o
+[ 95%] Building CXX object CMakeFiles/onnxruntime_provider_test.dir/Kushal/onnxruntime/onnxruntime/onnxruntime/test/providers/cpu/tensor/compress_op.test.cc.o
+[ 95%] Building CXX object CMakeFiles/onnxruntime_provider_test.dir/Kushal/onnxruntime/onnxruntime/onnxruntime/test/providers/cpu/tensor/concat_op_test.cc.o
+[ 95%] Building CXX object CMakeFiles/onnxruntime_provider_test.dir/Kushal/onnxruntime/onnxruntime/onnxruntime/test/providers/cpu/tensor/constant_test.cc.o
+[ 95%] Building CXX object CMakeFiles/onnxruntime_provider_test.dir/Kushal/onnxruntime/onnxruntime/onnxruntime/test/providers/cpu/tensor/dynamic_quantize_linear_test.cc.o
+[ 95%] Building CXX object CMakeFiles/onnxruntime_provider_test.dir/Kushal/onnxruntime/onnxruntime/onnxruntime/test/providers/cpu/tensor/expand_test.cc.o
+[ 95%] Building CXX object CMakeFiles/onnxruntime_provider_test.dir/Kushal/onnxruntime/onnxruntime/onnxruntime/test/providers/cpu/tensor/eyelike_op_test.cc.o
+[ 95%] Building CXX object CMakeFiles/onnxruntime_provider_test.dir/Kushal/onnxruntime/onnxruntime/onnxruntime/test/providers/cpu/tensor/gather_elements_op_test.cc.o
+[ 95%] Building CXX object CMakeFiles/onnxruntime_provider_test.dir/Kushal/onnxruntime/onnxruntime/onnxruntime/test/providers/cpu/tensor/gather_nd_op_test.cc.o
+[ 95%] Building CXX object CMakeFiles/onnxruntime_provider_test.dir/Kushal/onnxruntime/onnxruntime/onnxruntime/test/providers/cpu/tensor/gather_op_test.cc.o
+[ 95%] Building CXX object CMakeFiles/onnxruntime_provider_test.dir/Kushal/onnxruntime/onnxruntime/onnxruntime/test/providers/cpu/tensor/grid_sample_test.cc.o
+[ 95%] Building CXX object CMakeFiles/onnxruntime_provider_test.dir/Kushal/onnxruntime/onnxruntime/onnxruntime/test/providers/cpu/tensor/identity_op_test.cc.o
+[ 95%] Building CXX object CMakeFiles/onnxruntime_provider_test.dir/Kushal/onnxruntime/onnxruntime/onnxruntime/test/providers/cpu/tensor/isinf_test.cc.o
+[ 95%] Building CXX object CMakeFiles/onnxruntime_provider_test.dir/Kushal/onnxruntime/onnxruntime/onnxruntime/test/providers/cpu/tensor/isnan_test.cc.o
+[ 95%] Building CXX object CMakeFiles/onnxruntime_provider_test.dir/Kushal/onnxruntime/onnxruntime/onnxruntime/test/providers/cpu/tensor/mean_variance_normalization_test.cc.o
+[ 95%] Building CXX object CMakeFiles/onnxruntime_provider_test.dir/Kushal/onnxruntime/onnxruntime/onnxruntime/test/providers/cpu/tensor/nonzero_op_test.cc.o
+[ 95%] Building CXX object CMakeFiles/onnxruntime_provider_test.dir/Kushal/onnxruntime/onnxruntime/onnxruntime/test/providers/cpu/tensor/onehot_op_test.cc.o
+[ 95%] Building CXX object CMakeFiles/onnxruntime_provider_test.dir/Kushal/onnxruntime/onnxruntime/onnxruntime/test/providers/cpu/tensor/pad_test.cc.o
+[ 96%] Building CXX object CMakeFiles/onnxruntime_provider_test.dir/Kushal/onnxruntime/onnxruntime/onnxruntime/test/providers/cpu/tensor/quantize_linear_test.cc.o
+[ 96%] Building CXX object CMakeFiles/onnxruntime_provider_test.dir/Kushal/onnxruntime/onnxruntime/onnxruntime/test/providers/cpu/tensor/resize_op_test.cc.o
+[ 96%] Building CXX object CMakeFiles/onnxruntime_provider_test.dir/Kushal/onnxruntime/onnxruntime/onnxruntime/test/providers/cpu/tensor/reverse_sequence_test.cc.o
+[ 96%] Building CXX object CMakeFiles/onnxruntime_provider_test.dir/Kushal/onnxruntime/onnxruntime/onnxruntime/test/providers/cpu/tensor/scatter_nd_op_test.cc.o
+[ 96%] Building CXX object CMakeFiles/onnxruntime_provider_test.dir/Kushal/onnxruntime/onnxruntime/onnxruntime/test/providers/cpu/tensor/scatter_op_test.cc.o
+[ 96%] Building CXX object CMakeFiles/onnxruntime_provider_test.dir/Kushal/onnxruntime/onnxruntime/onnxruntime/test/providers/cpu/tensor/shape_op_test.cc.o
+[ 96%] Building CXX object CMakeFiles/onnxruntime_provider_test.dir/Kushal/onnxruntime/onnxruntime/onnxruntime/test/providers/cpu/tensor/size_test.cc.o
+[ 96%] Building CXX object CMakeFiles/onnxruntime_provider_test.dir/Kushal/onnxruntime/onnxruntime/onnxruntime/test/providers/cpu/tensor/slice_op.test.cc.o
+[ 96%] Building CXX object CMakeFiles/onnxruntime_provider_test.dir/Kushal/onnxruntime/onnxruntime/onnxruntime/test/providers/cpu/tensor/space_depth_ops_test.cc.o
+[ 96%] Building CXX object CMakeFiles/onnxruntime_provider_test.dir/Kushal/onnxruntime/onnxruntime/onnxruntime/test/providers/cpu/tensor/split_op_test.cc.o
+[ 96%] Building CXX object CMakeFiles/onnxruntime_provider_test.dir/Kushal/onnxruntime/onnxruntime/onnxruntime/test/providers/cpu/tensor/squeeze_op_test.cc.o
+[ 96%] Building CXX object CMakeFiles/onnxruntime_provider_test.dir/Kushal/onnxruntime/onnxruntime/onnxruntime/test/providers/cpu/tensor/tensor_op_test.cc.o
+[ 96%] Building CXX object CMakeFiles/onnxruntime_provider_test.dir/Kushal/onnxruntime/onnxruntime/onnxruntime/test/providers/cpu/tensor/tile_op_test.cc.o
+[ 96%] Building CXX object CMakeFiles/onnxruntime_provider_test.dir/Kushal/onnxruntime/onnxruntime/onnxruntime/test/providers/cpu/tensor/transpose_test.cc.o
+[ 96%] Building CXX object CMakeFiles/onnxruntime_provider_test.dir/Kushal/onnxruntime/onnxruntime/onnxruntime/test/providers/cpu/tensor/trilu_op_test.cc.o
+[ 96%] Building CXX object CMakeFiles/onnxruntime_provider_test.dir/Kushal/onnxruntime/onnxruntime/onnxruntime/test/providers/cpu/tensor/trilu_shape_inference_test.cc.o
+[ 97%] Building CXX object CMakeFiles/onnxruntime_provider_test.dir/Kushal/onnxruntime/onnxruntime/onnxruntime/test/providers/cpu/tensor/unique_op_test.cc.o
+[ 97%] Building CXX object CMakeFiles/onnxruntime_provider_test.dir/Kushal/onnxruntime/onnxruntime/onnxruntime/test/providers/cpu/tensor/unsqueeze_op_test.cc.o
+[ 97%] Building CXX object CMakeFiles/onnxruntime_provider_test.dir/Kushal/onnxruntime/onnxruntime/onnxruntime/test/providers/cpu/tensor/upsample_op_test.cc.o
+[ 97%] Building CXX object CMakeFiles/onnxruntime_provider_test.dir/Kushal/onnxruntime/onnxruntime/onnxruntime/test/providers/cpu/tensor/where_op_test.cc.o
+[ 97%] Building CXX object CMakeFiles/onnxruntime_provider_test.dir/Kushal/onnxruntime/onnxruntime/onnxruntime/test/providers/cpu/text/regex_full_match_test.cc.o
+[ 97%] Building CXX object CMakeFiles/onnxruntime_provider_test.dir/Kushal/onnxruntime/onnxruntime/onnxruntime/test/providers/cpu/text/string_concat_test.cc.o
+[ 97%] Building CXX object CMakeFiles/onnxruntime_provider_test.dir/Kushal/onnxruntime/onnxruntime/onnxruntime/test/providers/cpu/text/string_normalizer_test.cc.o
+[ 97%] Building CXX object CMakeFiles/onnxruntime_provider_test.dir/Kushal/onnxruntime/onnxruntime/onnxruntime/test/providers/cpu/text/string_split_test.cc.o
+[ 97%] Linking CXX executable onnxruntime_provider_test
+[100%] Built target onnxruntime_provider_test
+Namespace(build_dir='/Kushal/onnxruntime/onnxruntime/build/Linux', config=['Release'], update=True, build=True, clean=False, parallel=10, targets=None, compile_no_warning_as_error=False, build_shared_lib=True, build_apple_framework=False, enable_lto=False, use_cache=False, use_binskim_compliant_compile_flags=False, cmake_extra_defines=['PYTHON_EXECUTABLE=/opt/freeware/bin/python3.12', 'CMAKE_AIX_SHARED_LIBRARY_ARCHIVE=ON', 'CMAKE_INSTALL_PREFIX=/Kushal/onnxruntime/onnxruntime/install_dir'], cmake_path='cmake', cmake_generator=None, use_vcpkg=False, use_vcpkg_ms_internal_asset_cache=False, skip_submodule_sync=True, skip_pip_install=False, test=False, skip_tests=True, ctest_path='ctest', enable_onnx_tests=False, path_to_protoc_exe=None, cmake_deps_mirror_dir=None, fuzz_testing=False, enable_symbolic_shape_infer_tests=False, skip_onnx_tests=False, skip_winml_tests=False, skip_nodejs_tests=False, ctest_timeout='10800', enable_transformers_tool_test=False, build_micro_benchmarks=False, code_coverage=False, enable_training=False, enable_training_apis=False, enable_training_ops=False, enable_nccl=False, nccl_home=None, enable_memory_profile=False, enable_address_sanitizer=False, gen_doc=None, rv64=False, riscv_toolchain_root='', riscv_qemu_path='', android=False, android_abi='arm64-v8a', android_api=27, android_sdk_path='', android_ndk_path='', android_cpp_shared=False, android_run_emulator=False, build_wasm=False, build_wasm_static_lib=False, emsdk_version='4.0.23', enable_wasm_jspi=False, enable_wasm_simd=False, enable_wasm_relaxed_simd=False, enable_wasm_threads=False, disable_wasm_exception_catching=False, enable_wasm_api_exception_catching=False, enable_wasm_exception_throwing_override=True, wasm_run_tests_in_browser=False, enable_wasm_profiling=False, enable_wasm_debug_info=False, wasm_malloc=None, emscripten_settings=[], use_full_protobuf=False, use_mimalloc=False, external_graph_transformer_path=None, use_extensions=False, extensions_overridden_path=None, minimal_build=None, include_ops_by_config=None, enable_reduced_operator_type_support=False, disable_contrib_ops=False, disable_ml_ops=False, disable_rtti=False, disable_types=[], disable_exceptions=False, client_package_build=False, enable_pybind=True, build_wheel=False, wheel_name_suffix=None, skip_keras_test=False, build_csharp=False, build_nuget=False, msbuild_extra_options=[], build_java=False, build_nodejs=False, build_objc=False, use_cuda=False, cuda_version=None, cuda_home=None, cudnn_home=None, enable_cuda_line_info=False, enable_cuda_nhwc_ops=False, disable_cuda_nhwc_ops=False, enable_cuda_minimal_build=False, nvcc_threads=-1, enable_nvtx_profile=False, enable_cuda_profiling=False, no_sve=False, enable_arm_neon_nchwc=False, use_dnnl=False, dnnl_gpu_runtime='', dnnl_opencl_root='', dnnl_aarch64_runtime='', dnnl_acl_root='', use_openvino=None, use_tensorrt=False, use_tensorrt_builtin_parser=True, use_tensorrt_oss_parser=False, tensorrt_home=None, tensorrt_rtx_home=None, use_nv_tensorrt_rtx=False, use_dml=False, dml_path='', dml_external_project=False, use_nnapi=False, nnapi_min_api=None, use_coreml=False, use_qnn=None, qnn_home=None, use_snpe=False, snpe_root=None, use_vitisai=False, use_armnn=False, armnn_relu=False, armnn_bn=False, armnn_home=None, armnn_libs=None, use_acl=False, acl_home=None, acl_libs=None, no_kleidiai=False, use_qmx=False, use_rknpu=False, use_cann=False, cann_home=None, use_migraphx=False, migraphx_home=None, rocm_version=None, rocm_home=None, use_webnn=False, use_jsep=False, use_webgpu=None, use_external_dawn=False, wgsl_template='static', use_xnnpack=False, use_vsinpu=False, use_azure=False, enable_lazy_tensor=False, ms_experimental=False, enable_msinternal=False, use_lock_free_queue=False, enable_generic_interface=False, allow_running_as_root=True, enable_external_custom_op_schemas=False)
+Note: Google Test filter = FlatbufferUtilsTest.ExternalWriteReadWithLoadInitializers
+[==========] Running 1 test from 1 test suite.
+[----------] Global test environment set-up.
+[----------] 1 test from FlatbufferUtilsTest
+[ RUN      ] FlatbufferUtilsTest.ExternalWriteReadWithLoadInitializers
+/Kushal/onnxruntime/onnxruntime/onnxruntime/test/flatbuffers/flatbuffer_utils_test.cc:297: Failure
+Expected equality of these values:
+  expected_data
+    Which is: { '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', ... }
+  loaded_data
+    Which is: { '\0', '\x1' (1), '\0', '\x3' (3), '\0', '\b' (8), '\0', '\x1' (1), '\0', '\x2' (2), '\0', '\b' (8), '\0', '\x1' (1), '\0', '\x2' (2), '\0', '\t' (9), '\0', '\v' (11, 0xB), '\0', '\x10' (16), '\0', '\t' (9), '\0', '\n' (10, 0xA), '\0', '\x10' (16), '\0', '\t' (9), '\0', '\n' (10, 0xA), ... }
+With diff:
+@@ -1,1 +1,3 @@
+-{ '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', ... }
++{ '\0', '\x1' (1), '\0', '\x3' (3), '\0', '\b' (8), '\0', '\x1' (1), '\0', '\x2' (2), '\0', '\b' (8), '\0', '\x1' (1), '\0', '\x2' (2), '\0', '\t' (9), '\0', '\v' (11, 0xB), '\0', '\x10' (16), '\0', '\t' (9), '\0', '
++' (10, 0xA), '\0', '\x10' (16), '\0', '\t' (9), '\0', '
++' (10, 0xA), ... }
+
+tensor_16
+
+[  FAILED  ] FlatbufferUtilsTest.ExternalWriteReadWithLoadInitializers (4 ms)
+[----------] 1 test from FlatbufferUtilsTest (4 ms total)
+
+[----------] Global test environment tear-down
+[==========] 1 test from 1 test suite ran. (4 ms total)
+[  PASSED  ] 0 tests.
+[  FAILED  ] 1 test, listed below:
+[  FAILED  ] FlatbufferUtilsTest.ExternalWriteReadWithLoadInitializers
+
+ 1 FAILED TEST
+Note: Google Test filter = InternalTestingEP.TestSaveAndLoadOrtModel
+[==========] Running 1 test from 1 test suite.
+[----------] Global test environment set-up.
+[----------] 1 test from InternalTestingEP
+[ RUN      ] InternalTestingEP.TestSaveAndLoadOrtModel
+Loading model from path: testdata/mnist.onnx
+Loading ONNX model from: testdata/mnist.onnx
+Model::Load called with fd: 3 and block size: 26454
+==== MODEL INFO ====
+IR Version: 3
+Producer: CNTK
+Domain: ai.cntk
+
+==== GRAPH INFO ====
+Graph Name: CNTKGraph
+Nodes: 12
+Initializers: 8
+Inputs: 9
+Outputs: 1
+
+Initializer: Parameter193
+  DataType: 1
+  Dims: 16 4 4 10 
+Float data size: 2560
+0.0916329 0.121436 0.0853506 0.122607 -0.098754 -0.112124 -0.0357328 -0.0962621 -0.147887 0.0348589 -0.0484465 0.136893 0.146055 -0.119769 0.208041 -0.227133 
+
+Initializer: Parameter87
+  DataType: 1
+  Dims: 16 8 5 5 
+Float data size: 3200
+-0.0485564 -0.0910136 -0.00656792 -0.128403 0.1089 0.0842415 -0.168389 -0.271328 -0.0190255 0.0692626 0.0397507 -0.0117755 -0.0631889 -0.15086 -0.112444 0.0698724 
+
+Initializer: Parameter5
+  DataType: 1
+  Dims: 8 1 5 5 
+Float data size: 200
+-0.00890567 -0.236907 -0.508822 -0.0645618 0.141812 -0.591976 -0.475285 -0.0493481 0.768216 0.263465 -0.491763 0.0556177 1.01896 0.554704 -0.441664 -0.159537 
+
+Initializer: Parameter6
+  DataType: 1
+  Dims: 8 1 1 
+Float data size: 8
+-0.16154 -0.433836 0.0916414 -0.0168522 -0.0650264 -0.131738 0.0204176 -0.12111 
+
+Initializer: Parameter88
+  DataType: 1
+  Dims: 16 1 1 
+Float data size: 16
+-0.0822488 -0.108869 -0.14104 -0.204869 -0.179136 -0.215438 -0.133805 -0.195725 -0.268251 -0.258212 -0.0761561 0.0132841 -0.00444464 -0.414741 -0.178791 -0.0386559 
+
+Initializer: Pooling160_Output_0_reshape0_shape
+  DataType: 7
+  Dims: 2 
+
+Initializer: Parameter193_reshape1_shape
+  DataType: 7
+  Dims: 2 
+
+Initializer: Parameter194
+  DataType: 1
+  Dims: 1 10 
+Float data size: 10
+-0.044856 0.00779166 0.0681008 0.0299937 -0.12641 0.140219 -0.0552849 -0.0493838 0.0843221 -0.0545404 
+Model opset imports:
+Initializer: Parameter193
+Dim 0: 16
+Dim 1: 4
+Dim 2: 4
+Dim 3: 10
+0.0916329 0.121436 0.0853506 0.122607 -0.098754 -0.112124 -0.0357328 -0.0962621 -0.147887 0.0348589 -0.0484465 0.136893 0.146055 -0.119769 0.208041 -0.227133 
+Initializer: Parameter87
+Dim 0: 16
+Dim 1: 8
+Dim 2: 5
+Dim 3: 5
+-0.0485564 -0.0910136 -0.00656792 -0.128403 0.1089 0.0842415 -0.168389 -0.271328 -0.0190255 0.0692626 0.0397507 -0.0117755 -0.0631889 -0.15086 -0.112444 0.0698724 
+Initializer: Parameter5
+Dim 0: 8
+Dim 1: 1
+Dim 2: 5
+Dim 3: 5
+-0.00890567 -0.236907 -0.508822 -0.0645618 0.141812 -0.591976 -0.475285 -0.0493481 0.768216 0.263465 -0.491763 0.0556177 1.01896 0.554704 -0.441664 -0.159537 
+Initializer: Parameter6
+Dim 0: 8
+Dim 1: 1
+Dim 2: 1
+-0.16154 -0.433836 0.0916414 -0.0168522 -0.0650264 -0.131738 0.0204176 -0.12111 
+Initializer: Parameter88
+Dim 0: 16
+Dim 1: 1
+Dim 2: 1
+-0.0822488 -0.108869 -0.14104 -0.204869 -0.179136 -0.215438 -0.133805 -0.195725 -0.268251 -0.258212 -0.0761561 0.0132841 -0.00444464 -0.414741 -0.178791 -0.0386559 
+Initializer: Pooling160_Output_0_reshape0_shape
+Dim 0: 2
+
+Initializer: Parameter193_reshape1_shape
+Dim 0: 2
+
+Initializer: Parameter194
+Dim 0: 1
+Dim 1: 10
+-0.044856 0.00779166 0.0681008 0.0299937 -0.12641 0.140219 -0.0552849 -0.0493838 0.0843221 -0.0545404 
+Initializer: Parameter193
+Dim 0: 16
+Dim 1: 4
+Dim 2: 4
+Dim 3: 10
+0.0916329 0.121436 0.0853506 0.122607 -0.098754 -0.112124 -0.0357328 -0.0962621 -0.147887 0.0348589 -0.0484465 0.136893 0.146055 -0.119769 0.208041 -0.227133 
+Initializer: Parameter87
+Dim 0: 16
+Dim 1: 8
+Dim 2: 5
+Dim 3: 5
+-0.0485564 -0.0910136 -0.00656792 -0.128403 0.1089 0.0842415 -0.168389 -0.271328 -0.0190255 0.0692626 0.0397507 -0.0117755 -0.0631889 -0.15086 -0.112444 0.0698724 
+Initializer: Parameter5
+Dim 0: 8
+Dim 1: 1
+Dim 2: 5
+Dim 3: 5
+-0.00890567 -0.236907 -0.508822 -0.0645618 0.141812 -0.591976 -0.475285 -0.0493481 0.768216 0.263465 -0.491763 0.0556177 1.01896 0.554704 -0.441664 -0.159537 
+Initializer: Parameter6
+Dim 0: 8
+Dim 1: 1
+Dim 2: 1
+-0.16154 -0.433836 0.0916414 -0.0168522 -0.0650264 -0.131738 0.0204176 -0.12111 
+Initializer: Parameter88
+Dim 0: 16
+Dim 1: 1
+Dim 2: 1
+-0.0822488 -0.108869 -0.14104 -0.204869 -0.179136 -0.215438 -0.133805 -0.195725 -0.268251 -0.258212 -0.0761561 0.0132841 -0.00444464 -0.414741 -0.178791 -0.0386559 
+Initializer: Pooling160_Output_0_reshape0_shape
+Dim 0: 2
+
+Initializer: Parameter193_reshape1_shape
+Dim 0: 2
+
+Initializer: Parameter194
+Dim 0: 1
+Dim 1: 10
+-0.044856 0.00779166 0.0681008 0.0299937 -0.12641 0.140219 -0.0552849 -0.0493838 0.0843221 -0.0545404 
+Initializer 2nd time: Parameter193
+Dim 0: 16
+Dim 1: 4
+Dim 2: 4
+Dim 3: 10
+0.0916329 0.121436 0.0853506 0.122607 -0.098754 -0.112124 -0.0357328 -0.0962621 -0.147887 0.0348589 -0.0484465 0.136893 0.146055 -0.119769 0.208041 -0.227133 
+Initializer 2nd time: Parameter87
+Dim 0: 16
+Dim 1: 8
+Dim 2: 5
+Dim 3: 5
+-0.0485564 -0.0910136 -0.00656792 -0.128403 0.1089 0.0842415 -0.168389 -0.271328 -0.0190255 0.0692626 0.0397507 -0.0117755 -0.0631889 -0.15086 -0.112444 0.0698724 
+Initializer 2nd time: Parameter5
+Dim 0: 8
+Dim 1: 1
+Dim 2: 5
+Dim 3: 5
+-0.00890567 -0.236907 -0.508822 -0.0645618 0.141812 -0.591976 -0.475285 -0.0493481 0.768216 0.263465 -0.491763 0.0556177 1.01896 0.554704 -0.441664 -0.159537 
+Initializer 2nd time: Parameter6
+Dim 0: 8
+Dim 1: 1
+Dim 2: 1
+-0.16154 -0.433836 0.0916414 -0.0168522 -0.0650264 -0.131738 0.0204176 -0.12111 
+Initializer 2nd time: Parameter88
+Dim 0: 16
+Dim 1: 1
+Dim 2: 1
+-0.0822488 -0.108869 -0.14104 -0.204869 -0.179136 -0.215438 -0.133805 -0.195725 -0.268251 -0.258212 -0.0761561 0.0132841 -0.00444464 -0.414741 -0.178791 -0.0386559 
+Initializer 2nd time: Pooling160_Output_0_reshape0_shape
+Dim 0: 2
+
+Initializer 2nd time: Parameter193_reshape1_shape
+Dim 0: 2
+
+Initializer 2nd time: Parameter194
+Dim 0: 1
+Dim 1: 10
+-0.044856 0.00779166 0.0681008 0.0299937 -0.12641 0.140219 -0.0552849 -0.0493838 0.0843221 -0.0545404 
+ConvertInitializersIntoOrtValues:Parameter193
+ConvertInitializersIntoOrtValues: kSmallTensorExternalDataThresholdParameter193
+ConvertInitializersIntoOrtValues:Parameter87
+ConvertInitializersIntoOrtValues: kSmallTensorExternalDataThresholdParameter87
+ConvertInitializersIntoOrtValues:Parameter5
+ConvertInitializersIntoOrtValues: kSmallTensorExternalDataThresholdParameter5
+ConvertInitializersIntoOrtValues:Parameter6
+ConvertInitializersIntoOrtValues:Parameter88
+ConvertInitializersIntoOrtValues:Pooling160_Output_0_reshape0_shape
+ConvertInitializersIntoOrtValues:Parameter193_reshape1_shape
+ConvertInitializersIntoOrtValues:Parameter194
+AddInitializedOrtValue: ConvAddFusion_Add_B_Parameter6
+AddInitializedOrtValue: ConvAddFusion_Add_B_Parameter88
+AddInitializedOrtValue: Parameter193_reshape1
+Loading model from path: testdata/mnist.internal_testing_ep.test_output.ort
+LoadOrtModel from file: testdata/mnist.internal_testing_ep.test_output.ort
+file path: testdata/mnist.internal_testing_ep.test_output.ort, size: 32264
+Parameter193_reshape1 1
+3d  bb  aa  5  3d  f8  b3  63  3d  ae  
+ConvAddFusion_Add_B_Parameter88 1
+12  72  a8  bd  98  f6  de  bd  af  6c  
+ConvAddFusion_Add_B_Parameter6 1
+ab  6a  25  be  b5  1f  de  be  77  ae  
+Parameter194 1
+f4  ba  37  bd  31  51  ff  3b  71  78  
+Pooling160_Output_0_reshape0_shape 7
+1  0  0  0  0  0  0  0  0  1  
+Parameter5 1
+bc  11  e9  16  be  72  97  dd  bf  2  
+Parameter87 1
+bd  46  e3  a  bd  ba  65  5c  bb  d7  
+ORT format model metadata entries:
+ModelProto fields: producer_name='CNTK' producer_version='2.5.1' domain='ai.cntk' doc_string='' graph_doc_string='' model_version=1 ir_version=3
+Fetches size: 1
+Loading model from path: testdata/mnist.internal_testing_ep.test_output.ort
+LoadOrtModel from file: testdata/mnist.internal_testing_ep.test_output.ort
+file path: testdata/mnist.internal_testing_ep.test_output.ort, size: 7e08
+Parameter193_reshape1 1
+3d  bb  aa  5  3d  f8  b3  63  3d  ae  
+ConvAddFusion_Add_B_Parameter88 1
+12  72  a8  bd  98  f6  de  bd  af  6c  
+ConvAddFusion_Add_B_Parameter6 1
+ab  6a  25  be  b5  1f  de  be  77  ae  
+Parameter194 1
+f4  ba  37  bd  31  51  ff  3b  71  78  
+Pooling160_Output_0_reshape0_shape 7
+1  0  0  0  0  0  0  0  0  1  
+Parameter5 1
+bc  11  e9  16  be  72  97  dd  bf  2  
+Parameter87 1
+bd  46  e3  a  bd  ba  65  5c  bb  d7  
+ORT format model metadata entries:
+ModelProto fields: producer_name='CNTK' producer_version='2.5.1' domain='ai.cntk' doc_string='' graph_doc_string='' model_version=1 ir_version=3
+Fetches size: 1
+/Kushal/onnxruntime/onnxruntime/onnxruntime/test/internal_testing_ep/internal_testing_tests.cc:97: Failure
+Value of: SpanEq(data, expected)
+  Actual: false
+Expected: true
+
+[  FAILED  ] InternalTestingEP.TestSaveAndLoadOrtModel (48 ms)
+[----------] 1 test from InternalTestingEP (48 ms total)
+
+[----------] Global test environment tear-down
+[==========] 1 test from 1 test suite ran. (48 ms total)
+[  PASSED  ] 0 tests.
+[  FAILED  ] 1 test, listed below:
+[  FAILED  ] InternalTestingEP.TestSaveAndLoadOrtModel
+
+ 1 FAILED TEST
+Note: Google Test filter = OrtModelOnlyTests.SparseInitializerHandling
+[==========] Running 1 test from 1 test suite.
+[----------] Global test environment set-up.
+[----------] 1 test from OrtModelOnlyTests
+[ RUN      ] OrtModelOnlyTests.SparseInitializerHandling
+Loading ONNX model from: testdata/ort_minimal_test_models/sparse_initializer_handling.onnx
+Model::Load called with fd: 3 and block size: 324
+==== MODEL INFO ====
+IR Version: 7
+Producer: 
+Domain: 
+
+==== GRAPH INFO ====
+Graph Name: SparseInitializerHandling
+Nodes: 1
+Initializers: 0
+Inputs: 2
+Outputs: 1
+Model opset imports:
+Initializer: x
+Dim 0: 3
+Dim 1: 4
+Dim 2: 5
+
+Initializer: x
+Dim 0: 3
+Dim 1: 4
+Dim 2: 5
+
+Initializer 2nd time: x
+Dim 0: 3
+Dim 1: 4
+Dim 2: 5
+
+ConvertInitializersIntoOrtValues:x
+ConvertInitializersIntoOrtValues: kSmallTensorExternalDataThresholdx
+LoadOrtModel from file: testdata/ort_minimal_test_models/sparse_initializer_handling.onnx.test_output.ort
+file path: testdata/ort_minimal_test_models/sparse_initializer_handling.onnx.test_output.ort, size: 1672
+ORT format model metadata entries:
+ModelProto fields: producer_name='' producer_version='' domain='' doc_string='' graph_doc_string='' model_version=9223372036854775807 ir_version=7
+LoadOrtModel from file: testdata/ort_minimal_test_models/sparse_initializer_handling.onnx.test_output.ort
+file path: testdata/ort_minimal_test_models/sparse_initializer_handling.onnx.test_output.ort, size: 1672
+ORT format model metadata entries:
+ModelProto fields: producer_name='' producer_version='' domain='' doc_string='' graph_doc_string='' model_version=9223372036854775807 ir_version=7
+[       OK ] OrtModelOnlyTests.SparseInitializerHandling (59 ms)
+[----------] 1 test from OrtModelOnlyTests (59 ms total)
+
+[----------] Global test environment tear-down
+[==========] 1 test from 1 test suite ran. (59 ms total)
+[  PASSED  ] 1 test.
+Note: Google Test filter = CApiTest.TestLoadModelFromArrayWithExternalInitializersFromFileArray
+[==========] Running 1 test from 1 test suite.
+[----------] Global test environment set-up.
+[----------] 1 test from CApiTest
+[ RUN      ] CApiTest.TestLoadModelFromArrayWithExternalInitializersFromFileArray
+Model::Load called with model path: 
+Model metadata - Key: onnx.infer, Value: onnxruntime.quant
+Model opset imports:
+Initializer: input_zero_point
+
+Initializer: input_scale
+1.07741 
+Initializer: conv1.weight_scale
+0.00610631 
+Initializer: conv1.weight_zero_point
+
+Initializer: conv1.weight_quantized
+Dim 0: 32
+Dim 1: 3
+Dim 2: 3
+Dim 3: 3
+
+Initializer: output_zero_point
+
+Initializer: output_scale
+1.63467 
+Initializer: conv1.bias_quantized
+Dim 0: 32
+
+Initializer: conv1.bias_quantized_scale
+Dim 0: 1
+
+Initializer: conv1.bias_quantized_zero_point
+Dim 0: 1
+
+Initializer: input_zero_point
+
+Initializer: input_scale
+1.07741 
+Initializer: conv1.weight_scale
+0.00610631 
+Initializer: conv1.weight_zero_point
+
+Initializer: conv1.weight_quantized
+Dim 0: 32
+Dim 1: 3
+Dim 2: 3
+Dim 3: 3
+
+Initializer: output_zero_point
+
+Initializer: output_scale
+1.63467 
+Initializer: conv1.bias_quantized
+Dim 0: 32
+
+Initializer: conv1.bias_quantized_scale
+Dim 0: 1
+
+Initializer: conv1.bias_quantized_zero_point
+Dim 0: 1
+
+Initializer 2nd time: input_zero_point
+
+Initializer 2nd time: input_scale
+1.07741 
+Initializer 2nd time: conv1.weight_scale
+0.00610631 
+Initializer 2nd time: conv1.weight_zero_point
+
+Initializer 2nd time: conv1.weight_quantized
+Dim 0: 32
+Dim 1: 3
+Dim 2: 3
+Dim 3: 3
+
+Initializer 2nd time: output_zero_point
+
+Initializer 2nd time: output_scale
+1.63467 
+Initializer 2nd time: conv1.bias_quantized
+Dim 0: 32
+
+Initializer 2nd time: conv1.bias_quantized_scale
+Dim 0: 1
+
+Initializer 2nd time: conv1.bias_quantized_zero_point
+Dim 0: 1
+
+InjectExternalInitializersFromFilesInMemory: conv1.bias_quantized_zero_point
+InjectExternalInitializersFromFilesInMemory: conv1.bias_quantized_scale
+InjectExternalInitializersFromFilesInMemory: conv1.bias_quantized
+The tensors here are changedf or manipulateconv1.bias_quantized
+InjectExternalInitializersFromFilesInMemory: conv1.weight_quantized
+The tensors here are changedf or manipulateconv1.weight_quantized
+InjectExternalInitializersFromFilesInMemory: output_scale
+InjectExternalInitializersFromFilesInMemory: input_scale
+InjectExternalInitializersFromFilesInMemory: conv1.weight_zero_point
+InjectExternalInitializersFromFilesInMemory: conv1.weight_scale
+InjectExternalInitializersFromFilesInMemory: output_zero_point
+InjectExternalInitializersFromFilesInMemory: input_zero_point
+ConvertInitializersIntoOrtValues:input_zero_point
+ConvertInitializersIntoOrtValues:input_scale
+ConvertInitializersIntoOrtValues:conv1.weight_scale
+ConvertInitializersIntoOrtValues:conv1.weight_zero_point
+ConvertInitializersIntoOrtValues:conv1.weight_quantized
+ConvertInitializersIntoOrtValues: kSmallTensorExternalDataThresholdconv1.weight_quantized
+ConvertInitializersIntoOrtValues:output_zero_point
+ConvertInitializersIntoOrtValues:output_scale
+ConvertInitializersIntoOrtValues:conv1.bias_quantized
+ConvertInitializersIntoOrtValues: kSmallTensorExternalDataThresholdconv1.bias_quantized
+ConvertInitializersIntoOrtValues:conv1.bias_quantized_scale
+ConvertInitializersIntoOrtValues:conv1.bias_quantized_zero_point
+Saving model with external initializers to fd: 3
+[       OK ] CApiTest.TestLoadModelFromArrayWithExternalInitializersFromFileArray (38 ms)
+[----------] 1 test from CApiTest (38 ms total)
+
+[----------] Global test environment tear-down
+[==========] 1 test from 1 test suite ran. (38 ms total)
+[  PASSED  ] 1 test.
+Note: Google Test filter = CApiTest.TestLoadModelFromArrayWithExternalInitializersFromFileArrayPathRobust
+[==========] Running 1 test from 1 test suite.
+[----------] Global test environment set-up.
+[----------] 1 test from CApiTest
+[ RUN      ] CApiTest.TestLoadModelFromArrayWithExternalInitializersFromFileArrayPathRobust
+Model::Load called with model path: 
+Model metadata - Key: onnx.infer, Value: onnxruntime.quant
+Model opset imports:
+Initializer: input_zero_point
+
+Initializer: input_scale
+1.07741 
+Initializer: conv1.weight_scale
+0.00610631 
+Initializer: conv1.weight_zero_point
+
+Initializer: conv1.weight_quantized
+Dim 0: 32
+Dim 1: 3
+Dim 2: 3
+Dim 3: 3
+
+Initializer: output_zero_point
+
+Initializer: output_scale
+1.63467 
+Initializer: conv1.bias_quantized
+Dim 0: 32
+
+Initializer: conv1.bias_quantized_scale
+Dim 0: 1
+
+Initializer: conv1.bias_quantized_zero_point
+Dim 0: 1
+
+Initializer: input_zero_point
+
+Initializer: input_scale
+1.07741 
+Initializer: conv1.weight_scale
+0.00610631 
+Initializer: conv1.weight_zero_point
+
+Initializer: conv1.weight_quantized
+Dim 0: 32
+Dim 1: 3
+Dim 2: 3
+Dim 3: 3
+
+Initializer: output_zero_point
+
+Initializer: output_scale
+1.63467 
+Initializer: conv1.bias_quantized
+Dim 0: 32
+
+Initializer: conv1.bias_quantized_scale
+Dim 0: 1
+
+Initializer: conv1.bias_quantized_zero_point
+Dim 0: 1
+
+Initializer 2nd time: input_zero_point
+
+Initializer 2nd time: input_scale
+1.07741 
+Initializer 2nd time: conv1.weight_scale
+0.00610631 
+Initializer 2nd time: conv1.weight_zero_point
+
+Initializer 2nd time: conv1.weight_quantized
+Dim 0: 32
+Dim 1: 3
+Dim 2: 3
+Dim 3: 3
+
+Initializer 2nd time: output_zero_point
+
+Initializer 2nd time: output_scale
+1.63467 
+Initializer 2nd time: conv1.bias_quantized
+Dim 0: 32
+
+Initializer 2nd time: conv1.bias_quantized_scale
+Dim 0: 1
+
+Initializer 2nd time: conv1.bias_quantized_zero_point
+Dim 0: 1
+
+InjectExternalInitializersFromFilesInMemory: conv1.bias_quantized_zero_point
+InjectExternalInitializersFromFilesInMemory: conv1.bias_quantized_scale
+InjectExternalInitializersFromFilesInMemory: conv1.bias_quantized
+The tensors here are changedf or manipulateconv1.bias_quantized
+InjectExternalInitializersFromFilesInMemory: conv1.weight_quantized
+The tensors here are changedf or manipulateconv1.weight_quantized
+InjectExternalInitializersFromFilesInMemory: output_scale
+InjectExternalInitializersFromFilesInMemory: input_scale
+InjectExternalInitializersFromFilesInMemory: conv1.weight_zero_point
+InjectExternalInitializersFromFilesInMemory: conv1.weight_scale
+InjectExternalInitializersFromFilesInMemory: output_zero_point
+InjectExternalInitializersFromFilesInMemory: input_zero_point
+ConvertInitializersIntoOrtValues:input_zero_point
+ConvertInitializersIntoOrtValues:input_scale
+ConvertInitializersIntoOrtValues:conv1.weight_scale
+ConvertInitializersIntoOrtValues:conv1.weight_zero_point
+ConvertInitializersIntoOrtValues:conv1.weight_quantized
+ConvertInitializersIntoOrtValues: kSmallTensorExternalDataThresholdconv1.weight_quantized
+ConvertInitializersIntoOrtValues:output_zero_point
+ConvertInitializersIntoOrtValues:output_scale
+ConvertInitializersIntoOrtValues:conv1.bias_quantized
+ConvertInitializersIntoOrtValues: kSmallTensorExternalDataThresholdconv1.bias_quantized
+ConvertInitializersIntoOrtValues:conv1.bias_quantized_scale
+ConvertInitializersIntoOrtValues:conv1.bias_quantized_zero_point
+Saving model with external initializers to fd: 3
+Model::Load called with model path: 
+Model metadata - Key: onnx.infer, Value: onnxruntime.quant
+Model opset imports:
+Initializer: input_zero_point
+
+Initializer: input_scale
+1.07741 
+Initializer: conv1.weight_scale
+0.00610631 
+Initializer: conv1.weight_zero_point
+
+Initializer: conv1.weight_quantized
+Dim 0: 32
+Dim 1: 3
+Dim 2: 3
+Dim 3: 3
+
+Initializer: output_zero_point
+
+Initializer: output_scale
+1.63467 
+Initializer: conv1.bias_quantized
+Dim 0: 32
+
+Initializer: conv1.bias_quantized_scale
+Dim 0: 1
+
+Initializer: conv1.bias_quantized_zero_point
+Dim 0: 1
+
+Initializer: input_zero_point
+
+Initializer: input_scale
+1.07741 
+Initializer: conv1.weight_scale
+0.00610631 
+Initializer: conv1.weight_zero_point
+
+Initializer: conv1.weight_quantized
+Dim 0: 32
+Dim 1: 3
+Dim 2: 3
+Dim 3: 3
+
+Initializer: output_zero_point
+
+Initializer: output_scale
+1.63467 
+Initializer: conv1.bias_quantized
+Dim 0: 32
+
+Initializer: conv1.bias_quantized_scale
+Dim 0: 1
+
+Initializer: conv1.bias_quantized_zero_point
+Dim 0: 1
+
+Initializer 2nd time: input_zero_point
+
+Initializer 2nd time: input_scale
+1.07741 
+Initializer 2nd time: conv1.weight_scale
+0.00610631 
+Initializer 2nd time: conv1.weight_zero_point
+
+Initializer 2nd time: conv1.weight_quantized
+Dim 0: 32
+Dim 1: 3
+Dim 2: 3
+Dim 3: 3
+
+Initializer 2nd time: output_zero_point
+
+Initializer 2nd time: output_scale
+1.63467 
+Initializer 2nd time: conv1.bias_quantized
+Dim 0: 32
+
+Initializer 2nd time: conv1.bias_quantized_scale
+Dim 0: 1
+
+Initializer 2nd time: conv1.bias_quantized_zero_point
+Dim 0: 1
+
+InjectExternalInitializersFromFilesInMemory: conv1.bias_quantized_zero_point
+InjectExternalInitializersFromFilesInMemory: conv1.bias_quantized_scale
+InjectExternalInitializersFromFilesInMemory: conv1.bias_quantized
+The tensors here are changedf or manipulateconv1.bias_quantized
+InjectExternalInitializersFromFilesInMemory: conv1.weight_quantized
+The tensors here are changedf or manipulateconv1.weight_quantized
+InjectExternalInitializersFromFilesInMemory: output_scale
+InjectExternalInitializersFromFilesInMemory: input_scale
+InjectExternalInitializersFromFilesInMemory: conv1.weight_zero_point
+InjectExternalInitializersFromFilesInMemory: conv1.weight_scale
+InjectExternalInitializersFromFilesInMemory: output_zero_point
+InjectExternalInitializersFromFilesInMemory: input_zero_point
+ConvertInitializersIntoOrtValues:input_zero_point
+ConvertInitializersIntoOrtValues:input_scale
+ConvertInitializersIntoOrtValues:conv1.weight_scale
+ConvertInitializersIntoOrtValues:conv1.weight_zero_point
+ConvertInitializersIntoOrtValues:conv1.weight_quantized
+ConvertInitializersIntoOrtValues: kSmallTensorExternalDataThresholdconv1.weight_quantized
+ConvertInitializersIntoOrtValues:output_zero_point
+ConvertInitializersIntoOrtValues:output_scale
+ConvertInitializersIntoOrtValues:conv1.bias_quantized
+ConvertInitializersIntoOrtValues: kSmallTensorExternalDataThresholdconv1.bias_quantized
+ConvertInitializersIntoOrtValues:conv1.bias_quantized_scale
+ConvertInitializersIntoOrtValues:conv1.bias_quantized_zero_point
+Saving model with external initializers to fd: 3
+[       OK ] CApiTest.TestLoadModelFromArrayWithExternalInitializersFromFileArrayPathRobust (19 ms)
+[----------] 1 test from CApiTest (19 ms total)
+
+[----------] Global test environment tear-down
+[==========] 1 test from 1 test suite ran. (19 ms total)
+[  PASSED  ] 1 test.
+Note: Google Test filter = CApiTest.TestLoadModelFromArrayWithExternalInitializersFromFileMmap
+[==========] Running 1 test from 1 test suite.
+[----------] Global test environment set-up.
+[----------] 1 test from CApiTest
+[ RUN      ] CApiTest.TestLoadModelFromArrayWithExternalInitializersFromFileMmap
+Model::Load called with model path: 
+Model metadata - Key: onnx.infer, Value: onnxruntime.quant
+Model opset imports:
+Initializer: input_zero_point
+
+Initializer: input_scale
+1.07741 
+Initializer: conv1.weight_scale
+0.00610631 
+Initializer: conv1.weight_zero_point
+
+Initializer: conv1.weight_quantized
+Dim 0: 32
+Dim 1: 3
+Dim 2: 3
+Dim 3: 3
+
+Initializer: output_zero_point
+
+Initializer: output_scale
+1.63467 
+Initializer: conv1.bias_quantized
+Dim 0: 32
+
+Initializer: conv1.bias_quantized_scale
+Dim 0: 1
+
+Initializer: conv1.bias_quantized_zero_point
+Dim 0: 1
+
+Initializer: input_zero_point
+
+Initializer: input_scale
+1.07741 
+Initializer: conv1.weight_scale
+0.00610631 
+Initializer: conv1.weight_zero_point
+
+Initializer: conv1.weight_quantized
+Dim 0: 32
+Dim 1: 3
+Dim 2: 3
+Dim 3: 3
+
+Initializer: output_zero_point
+
+Initializer: output_scale
+1.63467 
+Initializer: conv1.bias_quantized
+Dim 0: 32
+
+Initializer: conv1.bias_quantized_scale
+Dim 0: 1
+
+Initializer: conv1.bias_quantized_zero_point
+Dim 0: 1
+
+Initializer 2nd time: input_zero_point
+
+Initializer 2nd time: input_scale
+1.07741 
+Initializer 2nd time: conv1.weight_scale
+0.00610631 
+Initializer 2nd time: conv1.weight_zero_point
+
+Initializer 2nd time: conv1.weight_quantized
+Dim 0: 32
+Dim 1: 3
+Dim 2: 3
+Dim 3: 3
+
+Initializer 2nd time: output_zero_point
+
+Initializer 2nd time: output_scale
+1.63467 
+Initializer 2nd time: conv1.bias_quantized
+Dim 0: 32
+
+Initializer 2nd time: conv1.bias_quantized_scale
+Dim 0: 1
+
+Initializer 2nd time: conv1.bias_quantized_zero_point
+Dim 0: 1
+
+InjectExternalInitializersFromFilesInMemory: conv1.bias_quantized_zero_point
+InjectExternalInitializersFromFilesInMemory: conv1.bias_quantized_scale
+InjectExternalInitializersFromFilesInMemory: conv1.bias_quantized
+The tensors here are changedf or manipulateconv1.bias_quantized
+InjectExternalInitializersFromFilesInMemory: conv1.weight_quantized
+The tensors here are changedf or manipulateconv1.weight_quantized
+InjectExternalInitializersFromFilesInMemory: output_scale
+InjectExternalInitializersFromFilesInMemory: input_scale
+InjectExternalInitializersFromFilesInMemory: conv1.weight_zero_point
+InjectExternalInitializersFromFilesInMemory: conv1.weight_scale
+InjectExternalInitializersFromFilesInMemory: output_zero_point
+InjectExternalInitializersFromFilesInMemory: input_zero_point
+ConvertInitializersIntoOrtValues:input_zero_point
+ConvertInitializersIntoOrtValues:input_scale
+ConvertInitializersIntoOrtValues:conv1.weight_scale
+ConvertInitializersIntoOrtValues:conv1.weight_zero_point
+ConvertInitializersIntoOrtValues:conv1.weight_quantized
+ConvertInitializersIntoOrtValues: kSmallTensorExternalDataThresholdconv1.weight_quantized
+ConvertInitializersIntoOrtValues:output_zero_point
+ConvertInitializersIntoOrtValues:output_scale
+ConvertInitializersIntoOrtValues:conv1.bias_quantized
+ConvertInitializersIntoOrtValues: kSmallTensorExternalDataThresholdconv1.bias_quantized
+ConvertInitializersIntoOrtValues:conv1.bias_quantized_scale
+ConvertInitializersIntoOrtValues:conv1.bias_quantized_zero_point
+Saving model with external initializers to fd: 4
+[       OK ] CApiTest.TestLoadModelFromArrayWithExternalInitializersFromFileMmap (15 ms)
+[----------] 1 test from CApiTest (15 ms total)
+
+[----------] Global test environment tear-down
+[==========] 1 test from 1 test suite ran. (15 ms total)
+[  PASSED  ] 1 test.

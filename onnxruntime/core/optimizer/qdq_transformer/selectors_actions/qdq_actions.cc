@@ -439,6 +439,7 @@ Status DQMatMulToMatMulNBitsAction::ProcessNewNode(Graph& graph,
     }
   }
 
+  std::cout<<"The path is gng here also see please 442 qdqaction.cc"<<std::endl;
   auto weight_T_tp = utils::TensorToTensorProto(weight_dst, weight_dst_name, true);
   auto scale_T_tp = utils::TensorToTensorProto(scale_dst, scale_dst_name, true);
   std::optional<ONNX_NAMESPACE::TensorProto> zp_T_tp;

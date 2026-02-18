@@ -228,8 +228,11 @@ Status LambOptimizerBuilder::Build(
           const auto& init_tensor = moment_state_it->second.Get<Tensor>();
 
           // TODO: need to support float -> float16 and float16-> float conversion
+
           ORT_THROW_IF_ERROR(IsMatchingTypeAndShape(init_tensor, element_type, weight_dims));
           moment_tensor_proto = utils::TensorToTensorProto(init_tensor, gradient_moment_name);
+
+          std::cout<<"The model here is in lamba_optimizer 235 :"<<moment_tensor_proto.name()<<std::endl;
         } else if (opt_configs[i].use_mixed_precision_moments) {
           moment_tensor_proto = CreateTensorProto<MLFloat16>(gradient_moment_name, MLFloat16(0.f), weight_dims);
         } else {

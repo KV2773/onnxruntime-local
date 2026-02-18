@@ -289,6 +289,7 @@ NodeArg& AddInitializerWithOrtValue(Graph& graph, const ONNX_NAMESPACE::TensorPr
   const bool has_external_data = utils::HasExternalData(new_initializer);
   ORT_ENFORCE(!has_external_data, "Expecting an initializer that contains data inline");
 
+  std::cout<<"The path is gng here also graph_utils.cc 292"<< new_initializer.name()<<std::endl;
   Tensor tensor;
   ORT_THROW_IF_ERROR(utils::CreateTensorFromTensorProto(Env::Default(), graph.ModelPath(),
                                                         new_initializer, tensor));

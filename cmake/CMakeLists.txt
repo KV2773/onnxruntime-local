@@ -21,6 +21,11 @@ if("${CMAKE_CXX_COMPILER_ID}" MATCHES "IntelLLVM")
   endif()
 endif()
 
+# AIX Flatbuffers is big-endian
+if (CMAKE_SYSTEM_NAME STREQUAL "AIX")
+  add_compile_definitions(FLATBUFFERS_LITTLEENDIAN=0)
+endif()
+
 # Needed for Java
 if (NOT CMAKE_CXX_STANDARD)
   set(CMAKE_C_STANDARD 99)

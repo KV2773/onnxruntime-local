@@ -23,6 +23,7 @@ class OptimizationStyle(enum.Enum):
     Runtime = 1
 
 
+
 def _optimization_suffix(optimization_level_str: str, optimization_style: OptimizationStyle, suffix: str):
     return "{}{}{}".format(
         f".{optimization_level_str}" if optimization_level_str != "all" else "",
@@ -153,6 +154,7 @@ def _convert(
             so = _create_session_options(
                 optimization_level, ort_target_path, custom_op_library, session_options_config_entries
             )
+            print("The path is gng her ealso see it in tools/python/util 156:",str(model))
             so.add_session_config_entry("session.save_model_format", "ORT")
             if optimization_style == OptimizationStyle.Runtime:
                 so.add_session_config_entry("optimization.minimal_build_optimizations", "save")
@@ -367,6 +369,9 @@ def convert_onnx_models_to_ort(
 
 
 if __name__ == "__main__":
+
+    print("Here the code is parsing 373 /tools/utils")
+
     args = parse_args()
     convert_onnx_models_to_ort(
         args.model_path_or_dir,

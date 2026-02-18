@@ -49,6 +49,7 @@ Status AdamOptimizerBuilder::Build(
         const auto& init_tensor = uc_state_it->second.Get<Tensor>();
         ORT_THROW_IF_ERROR(IsMatchingTypeAndShape(init_tensor, ONNX_NAMESPACE::TensorProto_DataType_INT64, TensorShapeVector{1}));
         uc_tensor_proto = utils::TensorToTensorProto(init_tensor, update_count_string);
+        std::cout<<"The model is gng here also 52 adam_optimizer_builder.cc "<<uc_tensor_proto.name()<<std::endl;
       } else {
         uc_tensor_proto = CreateTensorProto<int64_t>(update_count_string, 1);
       }
@@ -96,6 +97,8 @@ Status AdamOptimizerBuilder::Build(
           // TODO: need to support float -> float16 and float16-> float conversion
           ORT_THROW_IF_ERROR(IsMatchingTypeAndShape(init_tensor, element_type, weight_dims));
           moment_tensor_proto = utils::TensorToTensorProto(init_tensor, gradient_moment_name);
+        std::cout<<"The model is gng here also 100 adam_optimizer_builder.cc "<<moment_tensor_proto.name()<<std::endl;
+
         } else if (opt_configs[i].use_mixed_precision_moments) {
           moment_tensor_proto = CreateTensorProto<MLFloat16>(gradient_moment_name, MLFloat16(0.f), weight_dims);
         } else {

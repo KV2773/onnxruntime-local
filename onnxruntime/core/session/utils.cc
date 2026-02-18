@@ -218,6 +218,7 @@ static OrtStatus* CreateSessionAndLoadModelImpl(_In_ const OrtSessionOptions* op
     }
   }
 
+
   if (load_config_from_model) {
 #if !defined(ORT_MINIMAL_BUILD)
     if (model_path != nullptr) {

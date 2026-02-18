@@ -207,20 +207,49 @@ Status ReadExternalDataForTensor(const ONNX_NAMESPACE::TensorProto& tensor_proto
   ORT_RETURN_IF_ERROR(
       GetExternalDataInfo(tensor_proto, tensor_proto_dir, external_file_path, file_offset, tensor_byte_size));
 
+      std::cout<<"The tensor path for this models here is in tensorprotoutils.cc : 210 "<<tensor_proto.name()<<std::endl;
   unpacked_tensor.resize(tensor_byte_size);
-
+std::cout<<"The filepath for the model here is: "<<external_file_path<<"The otehr path is: "<<external_file_path.c_str() <<std::endl;
   if (external_file_path == kTensorProtoMemoryAddressTag) {
     // The external data is in the same memory as the tensor proto.
     // The offset is the address of the data.
-    std::memcpy(unpacked_tensor.data(), reinterpret_cast<const void*>(file_offset), tensor_byte_size);
-    return Status::OK();
-  }
 
+
+
+
+    std::memcpy(unpacked_tensor.data(), reinterpret_cast<const void*>(file_offset), tensor_byte_size);
+
+    for(int i=0;i<10;i++)
+    {
+      std::cout<<std::hex<<static_cast<int>(unpacked_tensor[i])<<" ";
+
+    }
+
+    std::cout<<std::endl;
+
+//   const DataTypeImpl* const type = DataTypeImpl::TensorTypeFromONNXEnum(tensor_proto.data_type())->GetElementType();
+//   size_t elem_size = type->Size();
+
+// SwapByteOrderInplace(elem_size,gsl::span<std::byte>(reinterpret_cast<std::byte*>(unpacked_tensor.data()),tensor_byte_size));
+
+  return Status::OK();
+  
+  }
+      std::cout<<"The tensor path for this models here is in tensorprotoutils.cc : 230 "<<tensor_proto.name()<<std::endl;
+
+// else{
   ORT_RETURN_IF_ERROR(onnxruntime::Env::Default().ReadFileIntoBuffer(
       external_file_path.c_str(),
       file_offset,
       tensor_byte_size,
       gsl::make_span(reinterpret_cast<char*>(unpacked_tensor.data()), tensor_byte_size)));
+  // }
+
+
+//   const DataTypeImpl* const type = DataTypeImpl::TensorTypeFromONNXEnum(tensor_proto.data_type())->GetElementType();
+//   size_t elem_size = type->Size();
+
+// SwapByteOrderInplace(elem_size,gsl::span<std::byte>(reinterpret_cast<std::byte*>(unpacked_tensor.data()),tensor_byte_size));
 
   return Status::OK();
 }
@@ -232,6 +261,7 @@ Status TensorProtoToOrtValueImpl(const Env& env, const std::filesystem::path& mo
     return Status(common::ONNXRUNTIME, common::INVALID_ARGUMENT, "MemBuffer has not been allocated.");
   }
 
+  std::cout<<"The tp.cc tptort256: "<<tensor_proto.name()<<std::endl;
   // to construct a Tensor with std::string we need to pass an allocator to the Tensor ctor
   // as the contents of each string needs to be allocated and freed separately.
   ONNXTensorElementDataType ele_type = utils::GetTensorElementType(tensor_proto);
@@ -1621,12 +1651,35 @@ ONNX_NAMESPACE::TensorProto TensorToTensorProto(const Tensor& tensor,
     tensor_proto.add_dims(dim);
   }
 
+
+  std::cout<<"The tensor protot name is gng down here see ehre tp.cc 1644 "<<tensor_proto_name<<std::endl;
+
+
+  // std::cout << tensor_proto_name
+  //         << " raw_data_size=" << tensor_proto.raw_data().size()
+  //         << " float_data_size=" << tensor_proto.float_data_size()
+  //         << std::endl;
+
   tensor_proto.set_data_type(tensor.GetElementType());
   if (use_tensor_buffer && tensor.SizeInBytes() > kSmallTensorExternalDataThreshold) {
     // https://github.com/microsoft/onnxruntime/blob/main/onnxruntime/core/graph/graph_flatbuffers_utils.cc#L302
     const auto* raw_data = tensor.DataRaw();
     ORT_ENFORCE(raw_data, "Missing raw data for tensor proto. Invalid tensor.");
     static_assert(sizeof(void*) <= sizeof(ExternalDataInfo::OFFSET_TYPE));
+
+
+
+const uint8_t* bytes = reinterpret_cast<const uint8_t*>(raw_data);
+size_t total = tensor.SizeInBytes();
+
+size_t count = std::min<size_t>(10, total);
+
+std::cout << "Raw bytes: ";
+for (size_t i = 0; i < count; ++i) {
+  std::cout << std::hex << std::setw(2) << std::setfill('0')
+            << static_cast<int>(bytes[i]) << " ";
+}
+std::cout << std::dec << std::endl;
 
     // we reinterpret_cast this back to void* in tensorprotoutils.cc:GetExtDataFromTensorProto.
     // use intptr_t as OFFSET_TYPE is signed. in theory you could get a weird looking value if the address uses the
@@ -1648,7 +1701,7 @@ ONNX_NAMESPACE::TensorProto TensorToTensorProto(const Tensor& tensor,
       SetRawDataInTensorProto(tensor_proto, tensor.DataRaw(), tensor.SizeInBytes());
     }
   }
-
+  
   return tensor_proto;
 }
 

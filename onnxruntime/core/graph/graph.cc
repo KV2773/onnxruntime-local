@@ -1246,6 +1246,7 @@ Graph::Graph(const Model& owning_model,
       const AttributeProto& attrib = node.attribute(0);
       if (attrib.type() == AttributeProto_AttributeType_SPARSE_TENSOR) {
         const TensorProto& sparse_values = node.attribute(0).sparse_tensor().values();
+        std::cout << "Sparse Tensor: " << tensor->name() << std::endl;
         if ((!(sparse_values.has_raw_data())) && utils::HasRawData(*tensor)) {
           onnxruntime::utils::ConvertRawDataInTensorProto(*tensor);
         }
@@ -1329,6 +1330,15 @@ Graph::Graph(const Model& owning_model,
 
   // Copy initial tensors to a map.
   for (auto& tensor : graph_proto_->initializer()) {
+    std::cout<< "Initializer: " << tensor.name() << std::endl;
+    for(int i = 0; i < tensor.dims_size(); i++) {
+      std::cout << "Dim " << i << ": " << tensor.dims(i) << std::endl;
+    }
+    for(int i = 0; i < std::min(16, tensor.float_data_size()); i++) {
+      std::cout << tensor.float_data(i) <<" ";
+    }
+    std::cout<< std::endl;
+
     auto p = name_to_initial_tensor_.emplace(tensor.name(), &tensor);
     if (!p.second) {
       LOGS(logger_, WARNING) << "Duplicate initializer (dense, sparse or ConstantNode): '" << tensor.name()
@@ -1444,6 +1454,14 @@ void Graph::InitializeStateFromModelFileGraphProto() {
   InlinedHashMap<std::string, const NodeArg*> graph_initializers;
   graph_initializers.reserve(graph_proto_->initializer_size());
   for (auto& initializer : graph_proto_->initializer()) {
+    std::cout<< "Initializer: " << initializer.name() << std::endl;
+     for(int i = 0; i < initializer.dims_size(); i++) {
+       std::cout << "Dim " << i << ": " << initializer.dims(i) << std::endl;
+     }
+     for(int i = 0; i <std::min(16, initializer.float_data_size()); i++) {
+       std::cout << initializer.float_data(i) <<" ";
+     }
+     std::cout<< std::endl;
     auto& initializer_name = initializer.name();
     auto initializer_arg = GetNodeArg(initializer_name);
     graph_initializers.insert({initializer_name, initializer_arg});
@@ -1518,10 +1536,24 @@ void Graph::InitializeStateFromModelFileGraphProto() {
     }
   }
 
+   
+
   ComputeOverridableInitializers();
+   for (auto& initializer : graph_proto_->initializer()) {
+    std::cout<< "Initializer 2nd time: " << initializer.name() << std::endl;
+     for(int i = 0; i < initializer.dims_size(); i++) {
+       std::cout << "Dim " << i << ": " << initializer.dims(i) << std::endl;
+     }
+     for(int i = 0; i < std::min(16, initializer.float_data_size()); i++) {
+       std::cout << initializer.float_data(i) <<" ";
+     }
+     std::cout<< std::endl;
+
+  }
 }
 
 Status Graph::VerifyNoDuplicateName() {
+  std::cout<<"VerifyNoDuplicateName"<<std::endl;
   auto& inputs_and_initializers = resolve_context_.inputs_and_initializers;
   auto& output_args = resolve_context_.output_args;
   auto& node_name_to_index = resolve_context_.node_name_to_index;
@@ -1571,6 +1603,8 @@ Status Graph::VerifyNoDuplicateName() {
 #endif  // !defined(ORT_MINIMAL_BUILD)
 
 void Graph::ConstructPrepackedSharedContainerAndSetMode(bool saving_mode_on) {
+  std::cout<<"ConstructPrepackedSharedContainerAndSetMode"<<std::endl;
+
   if (parent_graph_ == nullptr) {
     prepacked_key_to_blobs_.emplace();
     prepacked_weights_for_graph_.emplace(*prepacked_key_to_blobs_, saving_mode_on);
@@ -1630,6 +1664,8 @@ void Graph::AddEdge(NodeIndex src_node_index, NodeIndex dst_node_index, int src_
 }
 
 void Graph::RemoveEdge(NodeIndex src_node_index, NodeIndex dst_node_index, int src_arg_slot, int dst_arg_slot) {
+  std::cout<<"RemoveEdge"<<std::endl;
+
   if (nodes_.size() <= src_node_index || src_arg_slot < 0 || nodes_.size() <= dst_node_index || dst_arg_slot < 0 ||
       nullptr == nodes_[src_node_index] || nullptr == nodes_[dst_node_index]) {
     // Invalid node indexes specified.
@@ -2695,12 +2731,14 @@ class InferenceContextImpl : public ONNX_NAMESPACE::InferenceContext {
       // ONNX shape inference cannot handle external data, so we need to materialize it
       if (utils::HasExternalDataInMemory(*initializer)) {
         // Try to get the OrtValue for this initializer
+        std::cout<<"The initializer the name is 2734 graph.cc"<<initializer->name()<<std::endl;
         OrtValue ort_value;
         if (graph_.GetOrtValueInitializer(def->Name(), ort_value, true)) {
           // Create a temporary TensorProto with the actual data from the OrtValue
           // This allows ONNX shape inference to access the data
           const Tensor& tensor = ort_value.Get<Tensor>();
           auto temp_tensor_proto = utils::TensorToTensorProto(tensor, initializer->name(), /*use_tensor_buffer=*/false);
+          std::cout << "Materialized in-memory external data for initializer " << initializer->name() << " during shape inference." << std::endl;
           // Store the temporary proto so it outlives this call, maintain pointers steady
           temp_tensor_protos_.push_back(std::make_unique<ONNX_NAMESPACE::TensorProto>(std::move(temp_tensor_proto)));
           return temp_tensor_protos_.back().get();
@@ -2912,6 +2950,7 @@ Status Graph::SaveShapeValuesFromDataPropagation(const Node& node,
     const TensorProto* initializer = this->GetConstantInitializer(input_name, true);
 
     if (initializer) {
+      std::cout<<"The flatbuffer testcase is passing through it so commenting it can modify here"<<std::endl;
       // Get shape from TensorProto as well as element counts.
       // If shape has dimension size equals zero, it means it's a scalar and has only one element.
       auto tensor_shape = utils::GetTensorShapeFromTensorProto(*initializer);
@@ -2938,6 +2977,7 @@ Status Graph::SaveShapeValuesFromDataPropagation(const Node& node,
           } else if (initializer->data_type() == TensorProto_DataType_INT64) {
             const int64_t* src = tensor.Data<int64_t>();
             memcpy(input_values.data(), src, element_cnt * sizeof(int64_t));
+            // utils::SwapByteOrderInplace(sizeof(int64_t),gsl::make_span(input_values.data(), element_cnt));
           }
         } else {
           // If we can't get the OrtValue, it is a bug
@@ -3376,6 +3416,8 @@ common::Status Graph::TypeCheckInputsAndInitializers() {
       return status;
     }
   }
+  std::cout<<"TypeCheckInputsAndInitializers"<<std::endl;
+
 
   // Infer/check type and shape for all initializers from their values
   for (auto& initializer_pair : name_to_initial_tensor_) {
@@ -3600,7 +3642,7 @@ Status Graph::CleanUpShapeValuesFromDataPropagation() {
 
 Status Graph::VerifyInputAndInitializerNames() {
   std::unordered_set<std::string_view>& inputs_and_initializers = resolve_context_.inputs_and_initializers;
-
+std::cout<<"VerifyInputAndInitializerNames"<<std::endl;
   const auto& graph_inputs = GetInputs();
   inputs_and_initializers.reserve(graph_inputs.size() + name_to_initial_tensor_.size());
 
@@ -3741,6 +3783,8 @@ Status Graph::ConvertInitializersIntoOrtValues() {
   std::vector<Graph*> all_subgraphs;
   FindAllSubgraphs(all_subgraphs);
 
+
+
   const auto& model_path = GetModel().ModelPath();
   PathString model_dir;
   if (!model_path.empty()) {
@@ -3753,10 +3797,24 @@ Status Graph::ConvertInitializersIntoOrtValues() {
     for (int i = 0, lim = graph_proto.initializer_size(); i < lim; ++i) {
       auto& tensor_proto = *graph_proto.mutable_initializer(i);
 
+      std::cout<<"ConvertInitializersIntoOrtValues: " << tensor_proto.name() << std::endl;  
+
+      for(int i=0;i<std::min(tensor_proto.float_data_size(),10);i++)
+      {
+        std::cout<<tensor_proto.float_data(i)<<" ";
+      }
+      std::cout<<std::endl;
+
       if (utils::HasExternalData(tensor_proto)) {
+        std::cout<<"This path is here:3801 it is gng ConvertInitializersIntoOrtValues:"<<tensor_proto.name()<<std::endl;
         if (utils::HasExternalDataInMemory(tensor_proto)) {
           // This can happen when the model is created with ModelEditor.
           // We want to guard against malicious models with arbitrary in-memory references.
+      std::cout<<"ConvertInitializersIntoOrtValues: HasExternalDataInMemory:" << tensor_proto.name() << std::endl;  
+
+
+
+
           if (OrtValue v; GetOrtValueInitializer(tensor_proto.name(), v)) {
             ORT_RETURN_IF_NOT(graph_utils::CheckInMemoryDataMatch(tensor_proto, v.Get<Tensor>()),
                               "In-memory data mismatch for initializer: ", tensor_proto.name(),
@@ -3767,6 +3825,8 @@ Status Graph::ConvertInitializersIntoOrtValues() {
                                    "This is an invalid model.");
           }
         } else {
+      std::cout<<"ConvertInitializersIntoOrtValues: HasExternalData:" << tensor_proto.name() << std::endl;  
+
           // Validate external data location
           std::unique_ptr<onnxruntime::ExternalDataInfo> external_data_info;
           ORT_RETURN_IF_ERROR(onnxruntime::ExternalDataInfo::Create(tensor_proto.external_data(), external_data_info));
@@ -3780,16 +3840,37 @@ Status Graph::ConvertInitializersIntoOrtValues() {
         }
         continue;
       }
+      // std::cout<<"ConvertInitializersIntoOrtValues:" << tensor_proto.name() << std::endl;  
 
       size_t size_in_bytes = 0;
       ORT_RETURN_IF_ERROR(utils::GetSizeInBytesFromTensorProto<0>(tensor_proto, &size_in_bytes));
       if (size_in_bytes > utils::kSmallTensorExternalDataThreshold) {
         OrtValue ort_value;
+      // std::cout<<"ConvertInitializersIntoOrtValues: kSmallTensorExternalDataThreshold" << tensor_proto.name() << std::endl;  
+
         ORT_RETURN_IF_ERROR(utils::TensorProtoToOrtValue(Env::Default(), model_path, tensor_proto,
                                                          CPUAllocator::DefaultInstance(), ort_value));
         constexpr const bool use_tensor_buffer_true = true;
+       
+
+        //  if constexpr(endian::native != endian::little)
+        // {
+        //   // On big-endian systems, ensure that the data is converted to little-endian format
+        //   auto& tensor = ort_value.Get<Tensor>();
+          
+        //   auto type = tensor_proto.data_type(); // Ensure data type is set
+        //   auto ml_data = DataTypeImpl::TensorTypeFromONNXEnum(type)->GetElementType();
+        //   utils::SwapByteOrderInplace(ml_data->Size(),gsl::span<std::byte>(reinterpret_cast<std::byte*>(const_cast<void*>(tensor.DataRaw())), tensor.SizeInBytes()));
+        //   use_tensor_buffer_true = false;
+
+        // }
+
+
+
         auto tensor_proto_to_add = utils::TensorToTensorProto(ort_value.Get<Tensor>(), tensor_proto.name(),
                                                               use_tensor_buffer_true);
+
+        
         ORT_RETURN_IF_ERROR(graph.ReplaceInitializedTensor(tensor_proto_to_add, ort_value));
       }
     }
@@ -3834,6 +3915,8 @@ void Graph::AddInitializedTensor(const TensorProto& tensor) {
     return;
   }
 
+  std::cout<<"AddInitializedTensor: " << tensor.name() << std::endl;
+
   // This overload is used when the tensor does not point to an OrtValue which
   // would need to be updated, but it is okay if it is pointing to flatbuffers or some other place at the moment.
   // However, if an ort_value present for the name, it must be replaced.
@@ -3866,6 +3949,7 @@ Status Graph::AddInitializedOrtValue(const ONNX_NAMESPACE::TensorProto& tensor_p
   *(tensor_added) = tensor_proto;
   name_to_initial_tensor_.emplace(tensor_proto.name(), tensor_added);
 
+  std::cout<<"AddInitializedOrtValue: " << tensor_proto.name() << std::endl;
   if (ortvalue_initializer.IsAllocated()) {
     const bool has_data_in_memory = utils::HasExternalDataInMemory(tensor_proto);
     ORT_RETURN_IF_NOT(has_data_in_memory,
@@ -4048,6 +4132,9 @@ Status Graph::ReplaceInitializedTensorImpl(ONNX_NAMESPACE::TensorProto new_initi
     }
   }
 
+  std::cout<<"The intialiser here ReplaceInitializedTensorImpl: "<<new_initializer.name()<<"The datatype is:"<<new_initializer.data_type()<<std::endl;
+
+
   auto& mutable_initializers = *(graph_proto_->mutable_initializer());
   // use cheaper pointer comparison to find old entry
   auto existing_entry = std::find(mutable_initializers.pointer_begin(), mutable_initializers.pointer_end(),
@@ -4063,17 +4150,37 @@ Status Graph::ReplaceInitializedTensorImpl(ONNX_NAMESPACE::TensorProto new_initi
     ORT_IGNORE_RETURN_VALUE(ortvalue_initializers_.erase(initializer_name));
   }
 
+   for(int i = 0; i < std::min(16, new_initializer.float_data_size()); i++) {
+      std::cout << new_initializer.float_data(i) <<" ";
+    }
   **existing_entry = std::move(new_initializer);
   if (is_sparse) {
     sparse_tensor_names_.insert((**existing_entry).name());
   }
 
+ 
   return Status::OK();
 }
 
 common::Status Graph::ReplaceInitializedTensor(const ONNX_NAMESPACE::TensorProto& new_initializer,
                                                const OrtValue& ort_value) {
-  return ReplaceInitializedTensorImpl(new_initializer, ort_value, false);
+ onnx::TensorProto new_initializer_copy = new_initializer;
+//   if constexpr(endian::native != endian::little)
+//   {
+//     // On big-endian systems, ensure that the data is converted to little-endian format
+//     auto type = new_initializer.data_type(); // Ensure data type is set
+//     auto ml_data = DataTypeImpl::TensorTypeFromONNXEnum(type)->GetElementType();
+
+    
+//     utils::SwapByteOrderInplace(ml_data->Size(),
+//                                 gsl::span<std::byte>(reinterpret_cast<std::byte*>(const_cast<void*>(new_initializer.raw_data())),
+//                                                      tensor.SizeInBytes()));
+
+   
+//     // utils::ConvertRawDataInTensorProto(new_initializer_copy);
+//   }
+
+  return ReplaceInitializedTensorImpl(new_initializer_copy, ort_value, false);
 }
 
 #if !defined(DISABLE_EXTERNAL_INITIALIZERS)
@@ -4081,6 +4188,7 @@ Status Graph::InjectExternalInitializedTensors(const InlinedHashMap<std::string,
   for (const auto& [name, value] : external_initializers) {
     const auto& user_tensor = value.Get<Tensor>();
 
+    std::cout<<"The tensors here are changedf or manipulate"<<static_cast<int>(user_tensor.GetElementType())<<std::endl;
     OrtValue ort_value;
     TensorProto tensor_proto;
     constexpr const bool use_tensor_buffer_true = true;
@@ -4095,7 +4203,12 @@ Status Graph::InjectExternalInitializedTensors(const InlinedHashMap<std::string,
         utils::MakeCpuTensorCopy(user_tensor, initializer);
 
         tensor_proto = utils::TensorToTensorProto(initializer, name, use_tensor_buffer_true);
+std::cout<<"The model here is gng 4206: "<<tensor_proto.name()<<std::endl;
+
         ORT_ENFORCE(utils::HasExternalDataInMemory(tensor_proto), "Expecting this tensor_proto to have a pointer");
+
+       
+
         Tensor::InitOrtValue(std::move(initializer), ort_value);
       }
     } else {
@@ -4103,6 +4216,7 @@ Status Graph::InjectExternalInitializedTensors(const InlinedHashMap<std::string,
       tensor_proto = utils::TensorToTensorProto(user_tensor, name, use_tensor_buffer_false);
     }
 
+    
     ORT_RETURN_IF_ERROR(ReplaceInitializedTensorImpl(std::move(tensor_proto), std::move(ort_value), true));
     LOGS(logger_, INFO) << "Replaced external initializer: " << name;
   }
@@ -4115,6 +4229,7 @@ Status Graph::InjectExternalInitializersFromFilesInMemory(
     if (utils::HasExternalDataInFile(*tensor_proto)) {
       std::unique_ptr<ExternalDataInfo> external_data_info;
       ORT_RETURN_IF_ERROR(ExternalDataInfo::Create(tensor_proto->external_data(), external_data_info));
+    std::cout<<"InjectExternalInitializersFromFilesInMemory: " << tensor_name << std::endl;
 
       const auto& external_file = external_data_info->GetRelPath();
       onnxruntime::FileOffsetType file_offset = external_data_info->GetOffset();
@@ -4161,6 +4276,7 @@ Status Graph::InjectExternalInitializersFromFilesInMemory(
 
       constexpr const bool use_tensor_buffer_false = false;
       auto new_tensor_proto = utils::TensorToTensorProto(tensor, tensor_name, use_tensor_buffer_false);
+    std::cout<<"The tensors here are changedf or manipulate"<<tensor_name<<std::endl;
       **existing_entry = std::move(new_tensor_proto);
     }
   }
@@ -4210,6 +4326,7 @@ Status Graph::LoadExternalInitializerAsOrtValue(const std::string& name, OrtValu
   // This only supports TensorProtos that currently have their external data in an actual file.
   // This doesn't cache the new OrtValue because it would overwrite TensorProto.external_data and plugin EPs require
   // every call to Graph::GetExternalInitializerInfo to return the actual external file info (path, offset, length).
+  std::cout<<"LoadExternalInitializerAsOrtValue: " << name << std::endl;
   ORT_RETURN_IF(!utils::HasExternalDataInFile(tensor_proto), "Initializer '", name,
                 "' does not have external data in a file.");
 
@@ -4421,6 +4538,39 @@ common::Status Graph::SaveToOrtFormat(flatbuffers::FlatBufferBuilder& builder,
   auto inputs = SaveInputsOutputsToOrtFormat(builder, graph_inputs_including_initializers_);
   auto outputs = SaveInputsOutputsToOrtFormat(builder, graph_outputs_);
 
+ std::cout << "---- Graph Inputs Including Initializers ----" << std::endl;
+
+for (const auto* node_arg : graph_inputs_including_initializers_) {
+  if (!node_arg) continue;
+
+  const std::string& name = node_arg->Name();
+  std::cout << "Name: " << name;
+
+  auto it = name_to_initial_tensor_.find(name);
+  if (it != name_to_initial_tensor_.end()) {
+    const ONNX_NAMESPACE::TensorProto* tensor_proto = it->second;
+    std::cout << " | [Initializer]";
+
+    if (tensor_proto->has_raw_data()) {
+      const std::string& raw = tensor_proto->raw_data();
+      std::cout << " | RawData (hex): ";
+
+      for (unsigned char c : raw) {
+        printf("%02X ", c);
+      }
+    } else if (tensor_proto->float_data_size() > 0) {
+      std::cout << " | FloatData: ";
+      for (float v : tensor_proto->float_data()) {
+        std::cout << v << " ";
+      }
+    }
+  }
+
+  std::cout << std::endl;
+}
+
+
+
 #if !defined(DISABLE_SPARSE_TENSORS)
   std::vector<flatbuffers::Offset<fbs::SparseTensor>> sparse_initializers_data;
   sparse_initializers_data.reserve(sparse_tensor_names_.size());
@@ -4428,6 +4578,7 @@ common::Status Graph::SaveToOrtFormat(flatbuffers::FlatBufferBuilder& builder,
   const auto sparse_end = sparse_tensor_names_.end();
 
   std::vector<flatbuffers::Offset<fbs::Tensor>> initializers_data;
+
 #if !defined(DISABLE_SPARSE_TENSORS)
   assert(sparse_tensor_names_.size() <= name_to_initial_tensor_.size());
   initializers_data.reserve(name_to_initial_tensor_.size() - sparse_tensor_names_.size());
@@ -4436,7 +4587,30 @@ common::Status Graph::SaveToOrtFormat(flatbuffers::FlatBufferBuilder& builder,
 #endif
   const auto& model_path = ModelPath();
 
+  std::cout<<"The path of the model is:"<< model_path<<std::endl;
+
   for (const auto& pair : name_to_initial_tensor_) {
+
+    const ONNX_NAMESPACE::TensorProto* tensor_proto = pair.second;
+    std::cout << " | [Initializer]|"<<tensor_proto->name()<<"The datatype: "<<tensor_proto->data_type()<<std::endl;
+
+
+
+
+    if (tensor_proto->has_raw_data()) {
+      const std::string& raw = tensor_proto->raw_data();
+      std::cout << " | RawData (hex): ";
+
+      for (unsigned char c : raw) {
+        printf("%02X ", c);
+      }
+    } else if (tensor_proto->float_data_size() > 0) {
+      std::cout << " | FloatData: ";
+      for (float v : tensor_proto->float_data()) {
+        std::cout << v << " ";
+      }
+    }
+   std::cout<<std::endl;
     if (sparse_tensor_names_.find(pair.first) == sparse_end) {
       flatbuffers::Offset<fbs::Tensor> fbs_tensor;
       ORT_RETURN_IF_ERROR(
@@ -4689,12 +4863,18 @@ Status InlineOrCopyInitializer(const Graph& src_graph, const ONNX_NAMESPACE::Ten
   // copy any in-memory external data into raw data
   if (utils::HasExternalDataInMemory(initializer)) {
     OrtValue ort_value;
+    std::cout<<"The model here is 4864: gp.cc"<<initializer.name()<<std::endl;
     ORT_RETURN_IF_NOT(src_graph.GetOrtValueInitializer(initializer.name(), ort_value, /*check_outer_scope=*/false),
                       "Unable to find OrtValue for initializer with data in memory");
     ORT_RETURN_IF_NOT(graph_utils::CheckInMemoryDataMatch(initializer, ort_value.Get<Tensor>()),
                       "Unable to match OrtValue for initializer with data in memory");
     output = utils::TensorToTensorProto(ort_value.Get<Tensor>(),
                                         initializer.name(), /* use_tensor_buffer */ false);
+
+    if constexpr(endian::native!=endian::little)
+    {
+      utils::ConvertRawDataInTensorProto(output);
+    }
   } else {
     output = initializer;
   }
@@ -4706,6 +4886,7 @@ Status Graph::RegenerateInitializersAndReplaceInMemory(gsl::span<const Initializ
                                                        ONNX_NAMESPACE::GraphProto& output_graph_proto) const {
   auto& mutable_initializers = *output_graph_proto.mutable_initializer();
 
+
 #if !defined(DISABLE_SPARSE_TENSORS)
   output_graph_proto.clear_sparse_initializer();
 
@@ -4713,15 +4894,26 @@ Status Graph::RegenerateInitializersAndReplaceInMemory(gsl::span<const Initializ
   const bool has_sparse_initializers = !sparse_tensor_names_.empty();
   const auto sparse_end = sparse_tensor_names_.end();
 
+  std::cout<<"Here the replace ment of the tensor ishappening the model graph.cc 4865: "<<model_path<<std::endl;
+
+
   for (const auto& iter : iterators) {
     const auto& [name, tensor_proto] = *iter;
     const auto& initializer = *tensor_proto;
+    std::cout<<name<<" "<<std::endl;
     if (!has_sparse_initializers || sparse_end == sparse_tensor_names_.find(name)) {
       ORT_RETURN_IF_ERROR(InlineOrCopyInitializer(*this, initializer,
                                                   *mutable_initializers.Add()));
     } else {
       auto& sparse_initializer = *output_graph_proto.add_sparse_initializer();
       if (utils::HasExternalDataInMemory(initializer)) {
+        
+//   const DataTypeImpl* const type = DataTypeImpl::TensorTypeFromONNXEnum(tensor_proto.data_type())->GetElementType();
+//   size_t elem_size = type->Size();
+
+// SwapByteOrderInplace(elem_size,gsl::span<std::byte>(reinterpret_cast<std::byte*>(),tensor_byte_size));
+
+
         ONNX_NAMESPACE::TensorProto tensor_proto_inlined;
         ORT_RETURN_IF_ERROR(InlineOrCopyInitializer(*this, initializer,
                                                     tensor_proto_inlined));
